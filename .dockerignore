@@ -1,0 +1,10 @@
+.git
+.gitignore
+
+.travis.yml
+
+spec/
+.rspec
+Gemfile
+Gemfile.lock
+.ruby-version
