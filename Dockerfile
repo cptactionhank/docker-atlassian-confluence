@@ -17,7 +17,7 @@ RUN apt-get update -qq \
 ENV JAVA_HOME     /usr/lib/jvm/java-7-oracle
 ENV CONF_HOME     /home/confluence
 # setup secondary environment helper variables
-ENV CONFLUENCE_VERSION  5.5.6
+ENV CONFLUENCE_VERSION  5.6
 
 # create non-root user to run ``Atlassian Confluence``
 RUN useradd --create-home --comment "Account for running Atlassian Confluence" confluence \
