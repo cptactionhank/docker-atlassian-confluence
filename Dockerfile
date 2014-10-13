@@ -25,7 +25,7 @@ USER nobody:nogroup
 EXPOSE 8090
 
 # set volume mount points for installation and home directory
-VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence"]
+VOLUME ["/usr/local/atlassian/confluence-data", "/usr/local/atlassian/confluence"]
 
 # run ``Atlassian Confluence`` as a foreground process by default
 ENTRYPOINT ["/usr/local/atlassian/confluence/bin/start-confluence.sh"]
