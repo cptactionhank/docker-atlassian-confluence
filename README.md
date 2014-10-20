@@ -1,5 +1,7 @@
 # Atlassian Confluence in a Docker Container
 
+[![Build Status](https://travis-ci.org/cptactionhank/docker-atlassian-confluence.svg?branch=master)](https://travis-ci.org/cptactionhank/docker-atlassian-confluence)
+
 Use the awesome magic of Docker to isolate and run Atlassian Confluence isolated and with ease.
 
 ## Getting started
