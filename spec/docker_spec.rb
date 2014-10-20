@@ -10,6 +10,11 @@ describe "Docker image building" do
 
   end
 
+  before :all do
+    Excon.defaults[:write_timeout] = 90000
+    Excon.defaults[:read_timeout]  = 90000
+  end
+
   context "docker is working" do
 
     it "should have an url" do
