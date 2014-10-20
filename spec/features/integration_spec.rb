@@ -37,6 +37,7 @@ describe "Atlassian Confluence integration tests" do
           Timeout::timeout(default_timeout) do
             Thread.handle_interrupt(TimeoutError => :on_blocking) {
               $container.attach(stream: true, logs: true, stdout: true, stderr: true) do |stream, chunk|
+                puts "#{stream}: #{chunk}"
                 if ( chunk =~ /Server startup in \d+ ms/ )
                   Thread.current[:success] = true
                   Thread.exit
