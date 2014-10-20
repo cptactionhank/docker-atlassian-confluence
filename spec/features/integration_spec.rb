@@ -2,13 +2,13 @@ require 'uri'
 require 'timeout'
 require 'docker'
 
-describe "Atlassian Stash integration tests" do
+describe "Atlassian Confluence integration tests" do
 
-  let(:default_timeout) { 9000 }
+  let(:default_timeout) { 90000 }
 
   before(:all) do
-    Excon.defaults[:write_timeout] = 9000
-    Excon.defaults[:read_timeout]  = 9000
+    Excon.defaults[:write_timeout] = 90000
+    Excon.defaults[:read_timeout]  = 90000
     # let the container run for short a while before continuing
     sleep 2
     @uri = URI.parse Docker.url
@@ -29,7 +29,7 @@ describe "Atlassian Stash integration tests" do
 
   end
 
-  context "confirming Atlassian Stash is running" do
+  context "confirming Atlassian Confluence is running" do
 
     it "wait for server is started up" do
 
@@ -37,7 +37,6 @@ describe "Atlassian Stash integration tests" do
           Timeout::timeout(default_timeout) do
             Thread.handle_interrupt(TimeoutError => :on_blocking) {
               $container.attach(stream: true, logs: true, stdout: true, stderr: true) do |stream, chunk|
-                # puts chunk
                 if ( chunk =~ /Server startup in \d+ ms/ )
                   Thread.current[:success] = true
                   Thread.exit
