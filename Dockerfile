@@ -15,8 +15,8 @@ RUN set -x \
     && chmod -R 777         "${CONF_INSTALL}/temp" \
     && chmod -R 777         "${CONF_INSTALL}/logs" \
     && chmod -R 777         "${CONF_INSTALL}/work" \
-    && mkdir                "${CONF_INSTALL}/conf/Catalina" \
-    && chmod -R 777         "${CONF_INSTALL}/conf/Catalina" \
+    && mkdir -P             "${CONF_INSTALL}/conf/Standalone" \
+    && chmod -R 777         "${CONF_INSTALL}/conf/Standalone" \
     && echo -e              "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties"
 
 # run ``Atlassian Confluence`` as unprivileged user by default
