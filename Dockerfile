@@ -15,7 +15,7 @@ RUN set -x \
     && chmod -R 777         "${CONF_INSTALL}/temp" \
     && chmod -R 777         "${CONF_INSTALL}/logs" \
     && chmod -R 777         "${CONF_INSTALL}/work" \
-    && mkdir -P             "${CONF_INSTALL}/conf/Standalone" \
+    && mkdir -p             "${CONF_INSTALL}/conf/Standalone" \
     && chmod -R 777         "${CONF_INSTALL}/conf/Standalone" \
     && echo -e              "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties"
 
