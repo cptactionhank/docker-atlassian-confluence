@@ -5,6 +5,8 @@ ENV CONF_HOME     /var/local/atlassian/confluence
 ENV CONF_INSTALL  /usr/local/atlassian/confluence
 ENV CONF_VERSION  5.6.3
 
+ADD log4j.properties /usr/local/atlassian/confluence/conf/log4j.properties
+
 # install ``Atlassian Confluence``
 RUN set -x \
     && apt-get install -qqy libtcnative-1 \
