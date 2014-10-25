@@ -37,9 +37,8 @@ describe "Atlassian Confluence integration tests" do
           Timeout::timeout(default_timeout) do
             Thread.handle_interrupt(TimeoutError => :on_blocking) {
               $container.attach(stream: true, logs: true, stdout: true, stderr: true) do |stream, chunk|
-                # puts "#{stream}: #{chunk}"
                 if ( chunk =~ /Server startup in \d+ ms/ )
-                  Thread.current[:success] = true
+                  Thread.current[:errors] = true
                   Thread.exit
                 end
               end
@@ -49,21 +48,18 @@ describe "Atlassian Confluence integration tests" do
 
       thread.join
 
-      expect(thread.key? :success).to eql true
+      expect(thread.key? :errors).to eql true
 
     end
 
-    it "should not have any severe warnings in the stdout logs" do
+    it "should not have any severe in the stdout logs" do
 
       thread = Thread.new do
           Timeout::timeout(default_timeout) do
-            thread["success"] = []
+            thread["errors"] = []
             Thread.handle_interrupt(TimeoutError => :on_blocking) {
               $container.attach(stream: false, logs: true, stdout: true, stderr: true) do |stream, chunk|
-                if ( chunk =~ /SEVERE / )
-                  Thread.current[:success] << chunk
-                  Thread.exit
-                end
+                Thread.current[:errors] << chunk if ( chunk =~ /SEVERE:/ )
               end
             }
           end
@@ -71,15 +67,76 @@ describe "Atlassian Confluence integration tests" do
 
       thread.join
 
-      expect(thread[:success]).to be_empty
+      expect(thread[:errors]).to be_empty
 
     end
+
+    it "should not have any warnings in the stdout logs" do
+
+      thread = Thread.new do
+          Timeout::timeout(default_timeout) do
+            thread["errors"] = []
+            Thread.handle_interrupt(TimeoutError => :on_blocking) {
+              $container.attach(stream: false, logs: true, stdout: true, stderr: true) do |stream, chunk|
+                Thread.current[:errors] << chunk if ( chunk =~ /WARNING:/ )
+              end
+            }
+          end
+      end
+
+      thread.join
+
+      expect(thread[:errors]).to be_empty
+
+    end
+
+  end
+
+  context "confirming Atlassian Confluence is shut down" do
 
     it "shutting down the application" do
       # send term signal and expect container to shut down
       $container.kill
       # give the container up to 60 seconds to successfully shutdown
-      expect($container.wait 15).to including("StatusCode" => 0, "StatusCode" => -1)
+      expect($container.wait 60).to including("StatusCode" => 0, "StatusCode" => -1)
+    end
+
+    it "should not have any severe in the stdout logs" do
+
+      thread = Thread.new do
+          Timeout::timeout(default_timeout) do
+            thread["errors"] = []
+            Thread.handle_interrupt(TimeoutError => :on_blocking) {
+              $container.attach(stream: false, logs: true, stdout: true, stderr: true) do |stream, chunk|
+                Thread.current[:errors] << chunk if ( chunk =~ /SEVERE:/ )
+              end
+            }
+          end
+      end
+
+      thread.join
+
+      expect(thread[:errors]).to be_empty
+
+    end
+
+    it "should not have any warnings in the stdout logs" do
+
+      thread = Thread.new do
+          Timeout::timeout(default_timeout) do
+            thread["errors"] = []
+            Thread.handle_interrupt(TimeoutError => :on_blocking) {
+              $container.attach(stream: false, logs: true, stdout: true, stderr: true) do |stream, chunk|
+                Thread.current[:errors] << chunk if ( chunk =~ /WARNING:/ )
+              end
+            }
+          end
+      end
+
+      thread.join
+
+      expect(thread[:errors]).to be_empty
+
     end
 
   end
