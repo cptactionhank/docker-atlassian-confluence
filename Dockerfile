@@ -7,7 +7,7 @@ ENV CONF_VERSION  5.6.3
 
 # install ``Atlassian Confluence``
 RUN set -x \
-    && apt-get install -qqy libtcnative-1 \
+    && apt-get install -qqy libtcnative-1 xmlstarlet \
     && mkdir -p             "${CONF_HOME}" \
     && chown nobody:nogroup "${CONF_HOME}" \
     && mkdir -p             "${CONF_INSTALL}" \
@@ -17,7 +17,15 @@ RUN set -x \
     && chmod -R 777         "${CONF_INSTALL}/work" \
     && mkdir -p             "${CONF_INSTALL}/conf/Standalone" \
     && chmod -R 777         "${CONF_INSTALL}/conf/Standalone" \
-    && echo -e              "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties"
+    && ls -lha              "${CONF_INSTALL}/conf" \
+    && cat                  "${CONF_INSTALL}/conf/server.xml" \
+    && echo -e              "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
+    && xmlstarlet           ed --inplace \
+        --delete            "Server/@debug" \
+        --delete            "Server/Service/Connector/@debug" \
+        --delete            "Server/Service/Engine/@debug" \
+        --delete            "Server/Service/Engine/Host/@debug" \
+        --delete            "Server/Service/Engine/Host/Context/@debug" "${CONF_INSTALL}/conf/server.xml"
 
 # run ``Atlassian Confluence`` as unprivileged user by default
 USER nobody:nogroup
