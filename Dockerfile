@@ -3,7 +3,7 @@ FROM java:7
 # setup useful environment variables
 ENV CONF_HOME     /var/local/atlassian/confluence
 ENV CONF_INSTALL  /usr/local/atlassian/confluence
-ENV CONF_VERSION  5.6.2
+ENV CONF_VERSION  5.6.3
 
 # install ``Atlassian Confluence``
 RUN set -x \
