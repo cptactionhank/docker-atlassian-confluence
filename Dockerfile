@@ -3,7 +3,7 @@ FROM java:7
 # setup useful environment variables
 ENV CONF_HOME     /var/local/atlassian/confluence
 ENV CONF_INSTALL  /usr/local/atlassian/confluence
-ENV CONF_VERSION  5.6.1
+ENV CONF_VERSION  5.6.2
 
 # install ``Atlassian Confluence``
 RUN set -x \
@@ -21,9 +21,6 @@ RUN set -x \
     && xmlstarlet           ed --inplace \
         --delete            "Server/@debug" \
         --delete            "Server/Service/Connector/@debug" \
-        --delete            "Server/Service/Connector/@minProcessors" \
-        --delete            "Server/Service/Connector/@maxProcessors" \
-        --delete            "Server/Service/Connector/@useURIValidationHack" \
         --delete            "Server/Service/Engine/@debug" \
         --delete            "Server/Service/Engine/Host/@debug" \
         --delete            "Server/Service/Engine/Host/Context/@debug" \
