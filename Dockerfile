@@ -17,8 +17,6 @@ RUN set -x \
     && chmod -R 777         "${CONF_INSTALL}/work" \
     && mkdir -p             "${CONF_INSTALL}/conf/Standalone" \
     && chmod -R 777         "${CONF_INSTALL}/conf/Standalone" \
-    && ls -lha              "${CONF_INSTALL}/conf" \
-    && cat                  "${CONF_INSTALL}/conf/server.xml" \
     && echo -e              "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
     && xmlstarlet           ed --inplace \
         --delete            "Server/@debug" \
