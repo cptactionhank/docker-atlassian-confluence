@@ -1,6 +1,6 @@
 require 'docker'
 
-describe "Docker image building" do
+describe "Docker building" do
 
   RSpec.configure do |config|
 
@@ -10,56 +10,50 @@ describe "Docker image building" do
 
   end
 
-  before :all do
-    Excon.defaults[:write_timeout] = 90000
-    Excon.defaults[:read_timeout]  = 90000
-  end
+  context "when docker is supported" do
 
-  context "docker is working" do
-
-    it "should have an URL" do
+    it "have an URL" do
       expect(Docker.url).to_not be_nil
     end
 
-    it "should have version information" do
+    it "has version information" do
       expect(Docker.version).to_not be_nil
     end
 
-    it "version should be newer or equal to 1.3.0" do
+    it "has a compatible version" do
       Gem::Version.new(Docker::version["Version"]) >= Gem::Version.new('1.3.0')
     end
 
-    it "API version should be newer or equal to 15" do
+    it "has a compatible api version" do
       Gem::Version.new(Docker::version["ApiVersion"]) >= Gem::Version.new('15')
     end
 
   end
 
-  context "building test image" do
+  context "when building image" do
 
-      it "should successfully build application image" do
-        $image = Docker::Image.build_from_dir "."
-        expect($image).to_not be_nil
-      end
+    it "have successfully built" do
+      $image = Docker::Image.build_from_dir "."
+      expect($image).to_not be_nil
+    end
 
-      it "new image should exist" do
-        expect(Docker::Image.exist? $image.id).to eql true
-      end
+    it "exists" do
+      expect(Docker::Image.exist? $image.id).to eql true
+    end
 
   end
 
-  context "creating and starting application container" do
+  context "when running new image" do
 
-      it "should succeed creating container" do
-        $container = Docker::Container.create Image: $image.id
-        expect($container).to_not be_nil
-      end
+    it "creates the container" do
+      $container = Docker::Container.create Image: $image.id
+      expect($container).to_not be_nil
+    end
 
-      it "should run container" do
-        expect($container.start PublishAllPorts: true).to_not be_nil
-      end
+    it "runs the container" do
+      expect($container.start PublishAllPorts: true).to_not be_nil
+    end
 
   end
 
 end
-
