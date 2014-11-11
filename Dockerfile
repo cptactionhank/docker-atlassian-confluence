@@ -7,7 +7,9 @@ ENV CONF_VERSION  5.6.4
 
 # install ``Atlassian Confluence``
 RUN set -x \
+    && apt-get update \
     && apt-get install -qqy libtcnative-1 xmlstarlet \
+    && apt-get clean \
     && mkdir -p             "${CONF_HOME}" \
     && chown nobody:nogroup "${CONF_HOME}" \
     && mkdir -p             "${CONF_INSTALL}" \
