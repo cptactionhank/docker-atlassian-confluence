@@ -1,5 +1,6 @@
 # Atlassian Confluence in a Docker container
 
+[![Docker Build Status](http://hubstatus.container42.com/cptactionhank/atlassian-confluence)](https://registry.hub.docker.com/u/cptactionhank/atlassian-confluence) 
 [![Build Status](https://travis-ci.org/cptactionhank/docker-atlassian-confluence.svg)](https://travis-ci.org/cptactionhank/docker-atlassian-confluence)
 
 A containerized installation of Atlassian Confluence setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.
