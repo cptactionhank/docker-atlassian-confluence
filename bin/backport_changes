@@ -21,11 +21,11 @@ for major_branch in $(git branch --remotes | sed -ne '/origin\/[0-9][0-9]*.[0-9]
 	fi
 
 	for minor_branch in $(git branch | sed -n "/$major_branch.[0-9][0-9]*/p"); do
-		echo "Backporting changes to $branch from $minor_branch"
+		echo "Backporting changes to $minor_branch from $major_branch"
 	  
 	  # rebase minor version with major version
-	  git checkout "$branch"
-	  git rebase "$minor_branch"
+	  git checkout "$minor_branch"
+	  git rebase "$major_branch"
 
 	done
 	
