@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# git branch --remotes | sed -ne '/origin\/[0-9]/p' | sed -ne 's/[ ]*origin.//p' | sort -t. -k 1,1n -k 2,2n -k 3,3n
+
+echo "Backporting changes to all $1.* branches"
+
+for branch in $(git branch | sed -n "/$1..*/p"); do
+  git checkout "$branch"
+  git rebase "$1"
+done
+
+git checkout master
+git reset --hard "$(git branch --remotes | sed -ne '/origin\/[0-9]/p' | sed -ne 's/[ ]*origin.//p' | sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -1)"
