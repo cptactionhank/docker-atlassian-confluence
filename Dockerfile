@@ -52,5 +52,5 @@ VOLUME ["/var/local/atlassian/confluence", "/usr/local/atlassian/confluence"]
 # Set the default working directory as the installation directory.
 WORKDIR ${CONF_INSTALL}
 
-# Run Atlassian JIRA as a foreground process by default.
+# Run Atlassian Confluence as a foreground process by default.
 CMD ["bin/start-confluence.sh", "-fg"]
