@@ -1,14 +1,17 @@
 # Atlassian Confluence in a Docker container
 
-[![Docker Build Status](http://hubstatus.container42.com/cptactionhank/atlassian-confluence)](https://registry.hub.docker.com/u/cptactionhank/atlassian-confluence) 
-[![Build Status](https://travis-ci.org/cptactionhank/docker-atlassian-confluence.svg)](https://travis-ci.org/cptactionhank/docker-atlassian-confluence)
+ [![Docker Build Status](http://hubstatus.container42.com/cptactionhank/atlassian-confluence)](https://registry.hub.docker.com/u/cptactionhank/atlassian-confluence)
+ [![Build Status](https://travis-ci.org/cptactionhank/docker-atlassian-confluence.svg)](https://travis-ci.org/cptactionhank/docker-atlassian-confluence)
 
 A containerized installation of Atlassian Confluence setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.
 
 Want to help out, check out the contribution section.
 
-## I'm in the fast lane! Get me started
+## Important changes
 
+The installation directory `/usr/local/atlassian/confluence` is not mounted as a volume as standard anymore. Should you need to persist changes in this directory run the container with the additional argument `--volume /usr/local/atlassian/confluence`.
+
+## I'm in the fast lane! Get me started
 
 To quickly get started with running an Confluence instance, first run the following command:
 ```bash

@@ -5,7 +5,7 @@ ENV CONF_HOME     /var/local/atlassian/confluence
 ENV CONF_INSTALL  /usr/local/atlassian/confluence
 ENV CONF_VERSION  5.6
 
-# Install Atlassian Confluence and helper tools and setup initial home 
+# Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
 RUN set -x \
     && apt-get update --quiet \
@@ -47,10 +47,10 @@ EXPOSE 8090
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/local/atlassian/confluence", "/usr/local/atlassian/confluence"]
+VOLUME ["/var/local/atlassian/confluence"]
 
-# Set the default working directory as the installation directory.
-WORKDIR ${CONF_INSTALL}
+# Set the default working directory as the Confluence home directory.
+WORKDIR ${CONF_HOME}
 
 # Run Atlassian JIRA as a foreground process by default.
-CMD ["bin/start-confluence.sh", "-fg"]
+CMD ["/usr/local/atlassian/confluence/bin/start-confluence.sh", "-fg"]
