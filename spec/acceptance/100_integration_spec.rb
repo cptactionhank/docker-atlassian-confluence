@@ -2,7 +2,7 @@ require 'timeout'
 require 'spec_helper'
 
 describe 'Atlassian Confluence instance' do
-  include_context 'a buildable docker image', '.', Env: ['CATALINA_OPTS=-Xms64m']
+  include_context 'a buildable docker image', '.' #, Env: ['CATALINA_OPTS=-XX:MaxPermSize=128m']
 
   describe 'when starting a Confluence instance' do
     before(:all) { @container.start! PublishAllPorts: true }
