@@ -3,7 +3,7 @@ FROM java:7
 # Setup useful environment variables
 ENV CONF_HOME     /var/local/atlassian/confluence
 ENV CONF_INSTALL  /usr/local/atlassian/confluence
-ENV CONF_VERSION  5.7
+ENV CONF_VERSION  5.7.5
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
