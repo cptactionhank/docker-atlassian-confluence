@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.2.0'
 
 group :test do
   gem 'rake', '~> 10.4.2'
