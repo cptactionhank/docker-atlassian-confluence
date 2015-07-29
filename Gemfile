@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-# currently used ruby version
 ruby '2.2.0'
 
 group :test do
