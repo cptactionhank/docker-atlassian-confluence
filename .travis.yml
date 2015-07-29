@@ -26,5 +26,5 @@ before_script:
 
 script:
   - docker version
-  - docker pull java:7
+  - docker pull java:8
   - bundle exec rspec --format documentation --fail-fast

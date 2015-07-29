@@ -1,4 +1,4 @@
-FROM java:7
+FROM java:8
 
 # Setup useful environment variables
 ENV CONF_HOME     /var/local/atlassian/confluence

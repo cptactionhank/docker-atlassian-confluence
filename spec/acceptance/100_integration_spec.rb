@@ -23,23 +23,38 @@ describe 'Atlassian Confluence instance' do
     subject { page }
 
     context 'when visiting root page' do
-      it { expect(current_path).to match %r{^/setup/setupstart.action} }
-      it { is_expected.to have_title 'Welcome - Confluence' }
-      it { is_expected.to have_content 'Welcome' }
-      it { is_expected.to have_content 'Production Installation' }
-      it { is_expected.to have_button 'Start setup' }
+      it { expect(current_path).to match '/setup/setupstart.action' }
+      it { is_expected.to have_title 'Set up Confluence - Confluence' }
+      it { is_expected.to have_css 'form[name=startform]' }
+      it { is_expected.to have_css 'div.confluence-setup-choice-box[setup-type=custom]' }
+      # it { is_expected.to have_button 'Next' } # For some reason this does not work
     end
 
     context 'when processing welcome setup' do
       before :all do
         within 'form[name=startform]' do
-          click_button 'Start setup'
+          find(:css, 'div.confluence-setup-choice-box[setup-type=custom]').trigger('click')
+          click_button 'Next'
         end
       end
 
-      it { expect(current_path).to match %r{^/setup/setuplicense.action} }
-      it { is_expected.to have_content 'Confluence Setup Wizard' }
-      it { is_expected.to have_content 'Enter License' }
+      it { expect(current_path).to match '/setup/selectbundle.action' }
+      it { is_expected.to have_title 'Get add-ons - Confluence' }
+      it { is_expected.to have_content 'Get add-ons' }
+      it { is_expected.to have_css 'form#selectBundlePluginsForm' }
+      it { is_expected.to have_button 'Next' }
+    end
+
+    context 'when processing add-ons setup' do
+      before :all do
+        within 'form#selectBundlePluginsForm' do
+          click_button 'Next'
+        end
+      end
+
+      it { expect(current_path).to match '/setup/setuplicense.action' }
+      it { is_expected.to have_title 'License key - Confluence' }
+      it { is_expected.to have_content 'License key' }
     end
 
     context 'when processing license setup' do
