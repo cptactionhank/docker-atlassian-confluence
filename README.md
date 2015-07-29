@@ -1,11 +1,12 @@
 # Atlassian Confluence in a Docker container
 
 [![Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-confluence.svg)](https://travis-ci.org/cptactionhank/docker-atlassian-confluence)
-![Open Issues](https://img.shields.io/github/issues/badges/shields.svg)
-[![Stars on GitHub](https://img.shields.io/github/stars/badges/shields.svg)](https://github.com/cptactionhank/docker-atlassian-confluence)
-[![Forks on GitHub](https://img.shields.io/github/forks/badges/shields.svg)](https://github.com/cptactionhank/docker-atlassian-confluence)
+![Open Issues](https://img.shields.io/github/issues/cptactionhank/docker-atlassian-confluence.svg)
+[![Stars on GitHub](https://img.shields.io/github/stars/cptactionhank/docker-atlassian-confluence.svg)](https://github.com/cptactionhank/docker-atlassian-confluence)
+[![Forks on GitHub](https://img.shields.io/github/forks/cptactionhank/docker-atlassian-confluence.svg)](https://github.com/cptactionhank/docker-atlassian-confluence)
 [![Stars on Docker Hub](https://img.shields.io/docker/stars/cptactionhank/atlassian-confluence.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-confluence/)
 [![Pulls on Docker Hub](https://img.shields.io/docker/pulls/cptactionhank/atlassian-confluence.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-confluence/)
+
 
 A containerized installation of Atlassian Confluence setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.
 
