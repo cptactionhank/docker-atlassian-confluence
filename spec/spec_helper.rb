@@ -9,10 +9,9 @@ REGEX_ERROR   = /ERROR|ERR/
 REGEX_STARTUP = /Server startup in \d+ ms/
 REGEX_FILTER  =
 [
-  /The\ executor\ associated\ with\ thread\ pool\ \[http\-bio\-8090\]\ has\ not\ fully\ shutdown\.\ Some\ application\ threads\ may\ still\ be\ running\./,
-  /The\ web\ application\ \[\]\ registered\ the\ JDBC\ driver\ \[org\.hsqldb\.jdbc\.JDBCDriver\]\ but\ failed\ to\ unregister\ it\ when\ the\ web\ application\ was\ stopped\.\ To\ prevent\ a\ memory\ leak,\ the\ JDBC\ Driver\ has\ been\ forcibly\ unregistered\./,
-  /The\ web\ application\ \[\]\ registered\ the\ JDBC\ driver\ \[org\.postgresql\.Driver\]\ but\ failed\ to\ unregister\ it\ when\ the\ web\ application\ was\ stopped\.\ To\ prevent\ a\ memory\ leak,\ the\ JDBC\ Driver\ has\ been\ forcibly\ unregistered/,
-  /The\ web\ application\ \[\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ \[java\.lang\.ThreadLocal\]\ \(value\ \[java\.lang\.ThreadLocal@(.+)\]\)\ and\ a\ value\ of\ type\ \[org\.dom4j\.DocumentFactory\]\ \(value\ \[org\.dom4j\.DocumentFactory@(.+)\]\)\ but\ failed\ to\ remove\ it\ when\ the\ web\ application\ was\ stopped\.\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./
+  /The\ web\ application\ \[ROOT\]\ registered\ the\ JDBC\ driver\ \[org\.postgresql\.Driver\]\ but\ failed\ to\ unregister\ it\ when\ the\ web\ application\ was\ stopped\.\ To\ prevent\ a\ memory\ leak,\ the\ JDBC\ Driver\ has\ been\ forcibly\ unregistered/,
+  /The\ web\ application\ \[ROOT\]\ registered\ the\ JDBC\ driver\ \[org\.h2\.Driver\]\ but\ failed\ to\ unregister\ it\ when\ the\ web\ application\ was\ stopped\.\ To\ prevent\ a\ memory\ leak,\ the\ JDBC\ Driver\ has\ been\ forcibly\ unregistered/,
+  /The\ web\ application\ \[ROOT\]\ registered\ the\ JDBC\ driver\ \[org\.hsqldb\.jdbc\.JDBCDriver\]\ but\ failed\ to\ unregister\ it\ when\ the\ web\ application\ was\ stopped\.\ To\ prevent\ a\ memory\ leak,\ the\ JDBC\ Driver\ has\ been\ forcibly\ unregistered\./,
 ].inject { |*args| Regexp.union(*args) }
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }

@@ -1,7 +1,11 @@
 # Atlassian Confluence in a Docker container
 
- [![Docker Build Status](http://hubstatus.container42.com/cptactionhank/atlassian-confluence)](https://registry.hub.docker.com/u/cptactionhank/atlassian-confluence)
- [![Build Status](https://travis-ci.org/cptactionhank/docker-atlassian-confluence.svg)](https://travis-ci.org/cptactionhank/docker-atlassian-confluence)
+[![Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-confluence.svg)](https://circleci.com/gh/cptactionhank/docker-atlassian-confluence)
+![Open Issues](https://img.shields.io/github/issues/cptactionhank/docker-atlassian-confluence.svg)
+[![Stars on GitHub](https://img.shields.io/github/stars/cptactionhank/docker-atlassian-confluence.svg)](https://github.com/cptactionhank/docker-atlassian-confluence)
+[![Forks on GitHub](https://img.shields.io/github/forks/cptactionhank/docker-atlassian-confluence.svg)](https://github.com/cptactionhank/docker-atlassian-confluence)
+[![Stars on Docker Hub](https://img.shields.io/docker/stars/cptactionhank/atlassian-confluence.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-confluence/)
+[![Pulls on Docker Hub](https://img.shields.io/docker/pulls/cptactionhank/atlassian-confluence.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-confluence/)
 
 A containerized installation of Atlassian Confluence setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.
 
@@ -9,7 +13,9 @@ Want to help out, check out the contribution section.
 
 ## Important changes
 
-The installation directory `/usr/local/atlassian/confluence` is not mounted as a volume as standard anymore. Should you need to persist changes in this directory run the container with the additional argument `--volume /usr/local/atlassian/confluence`.
+The Confluence home and installation directory has been moved to `/var/atlassian/confluence` and `/opt/atlassian/confluence/` respectively.
+
+The installation directory `/opt/atlassian/confluence` is not mounted as a volume as standard anymore. Should you need to persist changes in this directory run the container with the additional argument `--volume /opt/atlassian/confluence`.
 
 ## I'm in the fast lane! Get me started
 
@@ -87,25 +93,25 @@ $ docker run -ti --rm --user root:root --volumes-from [container] java:7 chown d
 Example mounting files to change log4j logging output:
 
 ```
---volume "[hostpath]/log4j.properties:/usr/local/atlassian/confluence/confluence/WEB-INF/classes/log4j.properties"
+--volume "[hostpath]/log4j.properties:/opt/atlassian/confluence/confluence/WEB-INF/classes/log4j.properties"
 ```
 
 or by:
 
 ```bash
-$ docker run -ti --rm --user root:root --volumes-from [container] java:7 vi /usr/local/atlassian/confluence/confluence/WEB-INF/classes/log4j.properties
+$ docker run -ti --rm --user root:root --volumes-from [container] java:7 vi /opt/atlassian/confluence/confluence/WEB-INF/classes/log4j.properties
 ```
 
 This should also be modifiable to suit your needs.
 
 ### Reverse Proxy Support
 
-You need to change the `/usr/local/atlassian/confluence/conf/server.xml` file inside the container to include a couple of Connector [attributes](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Proxy_Support).
+You need to change the `/opt/atlassian/confluence/conf/server.xml` file inside the container to include a couple of Connector [attributes](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Proxy_Support).
 
 Gaining access to the `server.xml` file on a running container use the following docker command edited to suit your setup
 
 ```bash
-$ docker exec <container> vi /usr/local/atlassian/confluence/conf/server.xml
+$ docker exec <container> vi /opt/atlassian/confluence/conf/server.xml
 ```
 
 Within this container the file can be accessed and edited to match your configuration (remember to restart the Confluence container after). I recommend installing the Nano text editor unless you have the required knowledge to use vi.
@@ -138,10 +144,8 @@ For a reverse proxy server listening on port 443 (HTTPS) for inbound connections
 
 ## Contributions
 
-[![Build Status](https://travis-ci.org/cptactionhank/docker-atlassian-confluence.svg)](https://travis-ci.org/cptactionhank/docker-atlassian-confluence)
-
 This has been made with the best intentions and current knowledge so it shouldn't be expected to be flawless. However you can support this too with best practices and other additions. Travis-CI has been setup to build the Dockerfile and run acceptance tests on the application image to ensure it is tested and working.
 
 Out of date documentation, version, lack of tests, etc. why not help out by either creating an issue and open a discussion or sending a pull request with modifications.
 
-Acceptance tests are performed by Travis-CI in Ruby using the RSpec framework.
+Acceptance tests are performed by Circle-CI in Ruby using the RSpec framework.

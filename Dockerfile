@@ -1,9 +1,9 @@
-FROM java:7
+FROM java:8
 
 # Setup useful environment variables
-ENV CONF_HOME     /var/local/atlassian/confluence
-ENV CONF_INSTALL  /usr/local/atlassian/confluence
-ENV CONF_VERSION  5.7.5
+ENV CONF_HOME     /var/atlassian/confluence
+ENV CONF_INSTALL  /opt/atlassian/confluence
+ENV CONF_VERSION  5.8.2
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
@@ -47,10 +47,10 @@ EXPOSE 8090
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/local/atlassian/confluence"]
+VOLUME ["/var/atlassian/confluence"]
 
 # Set the default working directory as the Confluence home directory.
 WORKDIR ${CONF_HOME}
 
-# Run Atlassian JIRA as a foreground process by default.
-CMD ["/usr/local/atlassian/confluence/bin/start-confluence.sh", "-fg"]
+# Run Atlassian Confluence as a foreground process by default.
+CMD ["/opt/atlassian/confluence/bin/start-confluence.sh", "-fg"]
