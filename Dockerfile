@@ -1,4 +1,4 @@
-FROM java:8
+FROM airdock/oracle-jdk
 
 # Setup useful environment variables
 ENV CONF_HOME     /var/atlassian/confluence
