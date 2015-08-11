@@ -13,7 +13,7 @@ echo "Preparing branch for version new Atlassian Confluence version"
 
 # Edit the `Dockerfile` by changing the version string to the obtained
 # version from the Atlassian Confluence Early Access Preview version feed.
-sed --in-place "s/@@VERSION@@/${VERSION}/g" Dockerfile
-sed --in-place "s/@@VERSION@@/${VERSION}/g" README.md
+sed --in-place "s/\(CONF_VERSION[[:space:]]*\)\([[:digit:]].*\)/\1${VERSION}/g" Dockerfile
+sed --in-place "s/^\(> Version \).*$/\1${VERSION}/g" README.md
 
 echo "Ready for acceptance testing"
