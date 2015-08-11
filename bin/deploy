@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# The the Git commit information for the continous integration agent.
+git config --global user.email "circleci@circleci"
+git config --global user.name "Circle CI Automated Builder"
+
+# Obtain the latest Atlassian Confluence version by going to the JSON version
+# feed information to get a JSON-P formatted response, strip the output to
+# retrieve the actual content and then get the version number from the first
+# entry.
+VERSION=$(sed -n "s/ENV CONF_VERSION[[:space:]]*\([[:digit:]].*\)/\1/p" Dockerfile)
+
+git fetch --all
+git show-branch "origin/${VERSION}"
+
+# Checkout a new branch with no starting point
+
+if [[ $? == 0 ]]; then
+
+	echo "Branch '${VERSION}' already exist. Skipping..."
+
+else
+
+	echo "Creating new branch ${VERSION}"
+
+	git checkout --orphan "${VERSION}"
+
+	echo "Committing changes"
+
+	git add --all
+	git commit --message "Created new Atlassian Confluence branch for version ${VERSION}"
+
+	echo "Pushing new branch ${VERSION}"
+
+	git push origin "${VERSION}" || exit 255
+
+	echo "Deployed new version to new branch ${VERSION}"
+
+fi
