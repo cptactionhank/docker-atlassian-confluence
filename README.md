@@ -146,7 +146,7 @@ For a reverse proxy server listening on port 443 (HTTPS) for inbound connections
 
 ## Contributions
 
-[![Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-confluence/5.9.0-OD-58-008@@.svg)](https://circleci.com/gh/cptactionhank/docker-atlassian-confluence)
+[![Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-confluence/eap.svg)](https://circleci.com/gh/cptactionhank/docker-atlassian-confluence)
 
 This has been made with the best intentions and current knowledge so it shouldn't be expected to be flawless. However you can support this too with best practices and other additions. Circle-CI has been setup to build the `Dockerfile` and run acceptance tests on the application image to ensure it is tested and working.
 
