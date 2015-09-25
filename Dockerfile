@@ -15,7 +15,7 @@ RUN set -x \
     && chmod -R 700            "${CONF_HOME}" \
     && chown daemon:daemon     "${CONF_HOME}" \
     && mkdir -p                "${CONF_INSTALL}/conf" \
-    && curl -Ls                "http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-5.9.1-pluginsfour013.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
+    && curl -Ls                "http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-5.9.1-pluginsfour018.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
     && chmod -R 700            "${CONF_INSTALL}/conf" \
     && chmod -R 700            "${CONF_INSTALL}/temp" \
     && chmod -R 700            "${CONF_INSTALL}/logs" \
