@@ -15,6 +15,7 @@ dependencies:
 test:
   pre:
     - bin/prepare
+    - bin/pre_test
 
 deployment:
   newest-version:

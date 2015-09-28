@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo "Start PostgreSQL 9.3"
+PID=$(docker run -d --name postgres postgres:9.3)
+
+echo "Waiting for PostgreSQL to start"
+docker logs -f "60f9671d4dce" 2>&1 | grep --color --quiet 'PostgreSQL init process complete; ready for start up.'
+
+echo "Creating Confluence database on PostgreSQL"
+MY_COMMAND="psql --username postgres --command create database confluence owner postgres encoding 'utf8';"
+sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' "$PID")" -- bash -c "$MY_COMMAND"
+
+# MID=$(docker run -d mysql:5.6)
