@@ -8,3 +8,13 @@ docker logs -f "$PID" 2>&1 | grep --color --quiet 'PostgreSQL init process compl
 
 echo "Creating Confluence database on PostgreSQL"
 docker run --link "$PID":db postgres:9.3 psql --host db --user postgres --command "create database confluence owner postgres encoding 'utf8';"
+
+
+echo "Start MySQL 5.6"
+MID=$(docker run -d --name mysql --volume /var/run -e MYSQL_ROOT_PASSWORD=mysecretpassword mysql:5.6)
+
+echo "Waiting for MySQL to start"
+docker logs -f "$MID" 2>/dev/null | grep --silent 'MySQL init process done. Ready for start up.' # | grep --color --silent '3306  MySQL Community Server (GPL)'
+
+echo "Creating Confluence database on MySQL"
+docker run --link "$MID":db mysql:5.6 mysql --host db --user=root --password=mysecretpassword --execute 'CREATE DATABASE confluence CHARACTER SET utf8 COLLATE utf8_bin;'
