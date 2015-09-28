@@ -12,10 +12,13 @@ dependencies:
     - sudo apt-get --yes -qq update
     - sudo apt-get --yes -qq install jq
 
+database:
+  override:
+    - bin/setup_databases
+
 test:
   pre:
     - bin/prepare
-    - bin/pre_test
 
 deployment:
   newest-version:
