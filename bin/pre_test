@@ -7,4 +7,4 @@ echo "Waiting for PostgreSQL to start"
 docker logs -f "$PID" 2>&1 | grep --color --quiet 'PostgreSQL init process complete; ready for start up.'
 
 echo "Creating Confluence database on PostgreSQL"
-docker run --rm --volumes-from "$PID" postgres:9.3 psql --user postgres --command "create database confluence owner postgres encoding 'utf8';"
+docker run --rm --link "$PID":db postgres:9.3 psql --host db --user postgres --command "create database confluence owner postgres encoding 'utf8';"
