@@ -28,14 +28,6 @@ else
 
 	git checkout --orphan "${VERSION}"
 
-	# Perform changes specifying branch information in various files in the
-	# directory where needed. For example the readme updates the Circle-CI Build
-	# status shield to the new branch keeping the build information in sync.
-	echo "Updating files with new branch information"
-
-	sed --in-place README.md \
-	    --expression "s/master.svg/${VERSION}.svg/g"
-
 	# Perform initial commit with the current directory as is (ie. prepared for
 	# the new version branch).
 	echo "Committing changes"

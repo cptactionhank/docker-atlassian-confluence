@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-curl -Ls https://my.atlassian.com/download/feeds/current/confluence.json 2> /dev/null \
-  | perl -pe 'if(($_)=/([0-9]+([.][0-9]+)+)/){$_.="\n"}'
