@@ -1,11 +1,11 @@
 require 'timeout'
 require 'spec_helper'
 
-describe 'Atlassian Confluence with Embedded Database' do
+describe 'Atlassian Confluence with Embedded Database', order: :defined do
 	include_examples 'an acceptable confluence instance', 'using an embedded database'
 end
 
-describe 'Atlassian Confluence with PostgreSQL 9.3 Database' do
+describe 'Atlassian Confluence with PostgreSQL 9.3 Database', order: :defined do
 	include_examples 'an acceptable confluence instance', 'using a postgresql database' do
 		before :all do
 			# Create and run a PostgreSQL 9.3 container instance
@@ -22,7 +22,7 @@ describe 'Atlassian Confluence with PostgreSQL 9.3 Database' do
 	end
 end
 
-describe 'Atlassian Confluence with MySQL 5.6 Database' do
+describe 'Atlassian Confluence with MySQL 5.6 Database', order: :defined do
 	include_examples 'an acceptable confluence instance', 'using a mysql database' do
 		before :all do
 			# Create and run a MySQL 5.6 container instance
