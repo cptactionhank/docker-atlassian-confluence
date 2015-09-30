@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Start PostgreSQL 9.3"
-PID=$(docker run -d --name postgres -v /var/run postgres:9.3)
+docker run -d --name postgres postgres:9.3
 
 echo "Waiting for PostgreSQL to start"
 docker logs -f postgres 2>&1 | grep --color --quiet 'PostgreSQL init process complete; ready for start up.'
@@ -9,9 +9,8 @@ docker logs -f postgres 2>&1 | grep --color --quiet 'PostgreSQL init process com
 echo "Creating Confluence database on PostgreSQL"
 docker run --link postgres:db postgres:9.3 psql --host db --user postgres --command "create database confluence owner postgres encoding 'utf8';"
 
-
 echo "Start MySQL 5.6"
-MID=$(docker run -d --name mysql --volume /var/run -e MYSQL_ROOT_PASSWORD=mysecretpassword mysql:5.6)
+docker run -d --name mysql --volume /var/run -e MYSQL_ROOT_PASSWORD=mysecretpassword mysql:5.6
 
 echo "Waiting for MySQL to start"
 docker logs -f mysql 2>/dev/null | grep --silent 'MySQL init process done. Ready for start up.' # | grep --color --silent '3306  MySQL Community Server (GPL)'
