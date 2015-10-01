@@ -65,7 +65,7 @@ GEM
       rspec-its
       specinfra (~> 2.15)
     sfl (2.2)
-    specinfra (2.39.0)
+    specinfra (2.40.1)
       net-scp
       net-ssh (~> 2.7)
       net-telnet
@@ -90,3 +90,6 @@ DEPENDENCIES
   rspec (~> 3.2.0)
   rspec_junit_formatter (~> 0.2.3)
   serverspec (~> 2.9.1)
+
+BUNDLED WITH
+   1.10.6
