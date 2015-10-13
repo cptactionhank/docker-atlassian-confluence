@@ -14,7 +14,7 @@ describe 'Atlassian Confluence with PostgreSQL 9.3 Database', order: :defined do
 				# Wait for the PostgreSQL instance to start
 				$container_postgres.wait_for_output %r{PostgreSQL\ init\ process\ complete;\ ready\ for\ start\ up\.}
 				# Create Confluence database
-				$container_postgres.exec ["psql", "--username", "postgres", "--command", "create database confluence owner postgres encoding 'utf8';"]
+				$container_postgres.exec ["psql", "--username", "postgres", "--command", "create database confluencedb owner postgres encoding 'utf8';"]
 			end
 		else
 			before :all do
@@ -39,7 +39,7 @@ describe 'Atlassian Confluence with MySQL 5.6 Database', order: :defined do
 				# Wait for the MySQL instance to start
 				$container_mysql.wait_for_output %r{socket:\ '/var/run/mysqld/mysqld\.sock'\ \ port:\ 3306\ \ MySQL\ Community\ Server\ \(GPL\)}
 				# Create Confluence database
-				$container_mysql.exec ['mysql', '--user=root', '--password=mysecretpassword', '--execute', 'CREATE DATABASE confluence CHARACTER SET utf8 COLLATE utf8_bin;']
+				$container_mysql.exec ['mysql', '--user=root', '--password=mysecretpassword', '--execute', 'CREATE DATABASE confluencedb CHARACTER SET utf8 COLLATE utf8_bin;']
 			end
 		else
 			$container_mysql = Docker::Container.get 'mysql'
