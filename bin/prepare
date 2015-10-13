@@ -35,7 +35,6 @@ sed --in-place \
 # Edit the README.md by changing the announced version in the content
 sed --in-place \
 		--expression "s/^> Version ${CURRENT_VERSION}$/> Version ${VERSION}/g" \
-		--expression "s/docker-atlassian-confluence\/${CURRENT_VERSION}.svg/docker-atlassian-confluence\/${VERSION}.svg/g" \
 		README.md
 
 echo "Ready for acceptance testing"
