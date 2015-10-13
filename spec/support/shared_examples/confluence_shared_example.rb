@@ -70,10 +70,6 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
 
     context 'when processing database setup' do
       include_examples database_examples
-
-      # it { expect(current_path).to match '/setup/setupdata-start.action' }
-      # it { is_expected.to have_css 'form#demoChoiceForm' }
-      # it { is_expected.to have_button 'Example Site' }
     end
 
     context 'when processing content setup' do

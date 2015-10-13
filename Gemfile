@@ -15,4 +15,8 @@ group :test do
   gem 'docker-api', '~> 1.21.1', require: 'docker'
   gem 'archive-tar-minitar', '~> 0.5.2'
   gem 'rspec_junit_formatter', '~> 0.2.3'
+
+  gem 'pry', '~> 0.10.1'
+  gem 'byebug', '~> 6.0.2'
+  gem 'pry-rescue', '~> 1.4.2'
 end

@@ -13,7 +13,6 @@ REGEX_FILTER  = Regexp.compile (Regexp.union [
   %r{org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[ROOT\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ .+\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\.}
 ])
 
-puts "Autoloading directory: #{"#{File.dirname(__FILE__)}/support/**/*.rb"}"
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
 RSpec.configure do |config|
