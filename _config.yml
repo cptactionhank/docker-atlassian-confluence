@@ -11,6 +11,7 @@ baseurl: "/docker-atlassian-confluence" # the subpath of your site, e.g. /blog/
 url: "http://cptactionhank.github.io" # the base hostname & protocol for your site
 
 github_username: cptactionhank
+docker_username: cptactionhank
 
 # Exclude these files from your production _site
 exclude:
