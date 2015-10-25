@@ -11,10 +11,9 @@
 
   <p>Below you can find an example file of how a systemd service unit could be defined for your Atlassian Confluence instance. For more information of service files click <a href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">here</a>.</p>
 
-  <h4>jira.service</h4>
+  <h4>confluence.service</h4>
   <pre><span class="pl-c1">[Unit]</span>
 Description=Atlassian Confluence in a Docker container
-Documentation=https://confluence.atlassian.com/display/JIRA064/JIRA+Installation+and+Upgrade+Guide
 Requires=docker.service
 After=docker.service
 
@@ -27,7 +26,7 @@ TimeoutStartSec=0
 ExecStartPre=/usr/bin/docker pull cptactionhank/atlassian-confluence:<span class="dynamic" ng-bind="confluence.version.name"></span>
 ExecStartPre=-/usr/bin/docker rm --volumes --force "atlassian-confluence.service"
 ExecStartPre=/usr/bin/docker create --restart=no --name "atlassian-confluence.service" \
---volume hostpath:/var/atlassian/jira \
+--volume hostpath:/var/atlassian/confluence \
 --env "CATALINA_OPTS=-Xms64m -Xmx768m -Datlassian.plugins.enable.wait=300" \
 cptactionhank/atlassian-confluence:<span class="dynamic" ng-bind="confluence.version.name"></span>
 
@@ -41,7 +40,7 @@ WantedBy=multi-user.target</pre>
 
   <p>Below you can find an example file of how an Upstart system job could be defined for your Atlassian Confluence instance. For more information of system job configuration files click <a href="http://upstart.ubuntu.com/cookbook/#system-job">here</a>.</p>
 
-  <h4>jira.conf</h4>
+  <h4>confluence.conf</h4>
 
   <pre><span class="pl-k">description</span> "Atlassian Confluence in a Docker container"
 
@@ -63,14 +62,14 @@ sleep 1
 if !(docker ps -a | grep -q "atlassian-confluence.service"); then
   logger "Container cptactionhank/atlassian-confluence was not found."
   <span class="pl-c"># get the latest build of the image (this is necessary for non-official images)</span>
-  logger "Pulling latest build of the image cptactionhank/atlassian-confluence:<span class="dynamic">{{ jira.version }}</span>"
+  logger "Pulling latest build of the image cptactionhank/atlassian-confluence:<span class="dynamic">{{ confluence.version }}</span>"
   /usr/bin/docker pull cptactionhank/atlassian-confluence:<span class="dynamic" ng-bind="confluence.version.name"></span>
   <span class="pl-c"># create docker container with the following parameters</span>
   logger "Creating container for image $IMAGE:<span class="dynamic" ng-bind="confluence.version.name"></span>"
   /usr/bin/docker run --restart=no --detach --name "atlassian-confluence.service" \
   --user daemon:daemon \
-  --volume /srv/atlassian/jira:/var/local/atlassian/jira \
-  --volume /srv/atlassian/jira.server.xml:/usr/local/atlassian/jira/conf/server.xml \
+  --volume /srv/atlassian/confluence:/var/local/atlassian/confluence \
+  --volume /srv/atlassian/confluence.server.xml:/usr/local/atlassian/confluence/conf/server.xml \
   --env "CATALINA_OPTS=-Xms64m -Xmx768m -Datlassian.plugins.enable.wait=300" \
   cptactionhank/atlassian-confluence:<span class="dynamic" ng-bind="confluence.version.name"></span>
   logger "Success"
