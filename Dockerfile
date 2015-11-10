@@ -1,9 +1,15 @@
 FROM java:8
 
 # Setup useful environment variables
-ENV CONF_HOME     /var/atlassian/confluence
-ENV CONF_INSTALL  /opt/atlassian/confluence
-ENV CONF_VERSION  5.8.16
+ENV CONF_HOME       /var/atlassian/confluence
+ENV CONF_INSTALL    /opt/atlassian/confluence
+#ENV CONF_VERSION    5.8.16
+ENV CONF_PORT     8090
+ENV CONF_SCHEME   https
+#ENV CONF_URL      dev.stephanbartl.at
+ENV CONF_PROXYP   443
+ENV CONF_SECURE   true
+
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
@@ -35,7 +41,9 @@ RUN set -x \
         --delete               "Server/Service/Engine/@debug" \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
-                               "${CONF_INSTALL}/conf/server.xml"
+                               "${CONF_INSTALL}/conf/server.xml" \
+    && sed --in-place           "s/port=\"8080\"/port=\""${CONF_PORT}"\" scheme=\""${CONF_SCHEME}"\" proxyName=\""${CONF_URL}"\" proxyPort=\""${CONF_PROXYP}"\" secure=\""${CONF_SECURE}"\"/" "${CONF_INSTALL}/conf/server.xml" \
+
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
