@@ -1,6 +1,3 @@
-require 'timeout'
-require 'spec_helper'
-
 shared_examples 'an acceptable confluence instance' do |database_examples|
   include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms64m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
