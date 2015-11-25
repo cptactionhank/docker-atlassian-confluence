@@ -1,6 +1,3 @@
-require 'timeout'
-require 'spec_helper'
-
 shared_examples 'an acceptable confluence instance' do |database_examples|
   include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms64m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
@@ -123,33 +120,9 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
       end
 
       it { expect(current_path).to match '/welcome.action' }
-      it { is_expected.to have_button "Let's get going!" }
       # The acceptance testing comes to an end here since we got to the
       # Confluence dashboard without any trouble through the setup.
     end
-
-    # context 'when processing welcome introduction' do
-    #   before :all do
-    #     # Step 1
-    #     click_button "Let's get going!"
-    #     # Step 2
-    #     click_button 'No headphones? Skip'
-    #     # Step 3
-    #     click_button 'Skip'
-    #     # Step 4
-    #     fill_in 'grow-intro-space-name', with: 'Continuous Integration Space'
-    #     click_button 'Continue'
-    #     # we need to wait for location change here
-    #     wait_for_location_change
-    #     # Step 6 edit Space Home page
-    #     fill_in 'content-title', with: 'Continous Integration Page'
-    #     find(:css, 'button[name=confirm]').trigger('click')
-    #   end
-
-    #   it { expect(current_path).to match '/display/CIS/Continous+Integration+Page' }
-    #   # it { is_expected.to have_content 'Continous Integration Space' }
-    #   # it { is_expected.to have_content 'Continous Integration Page' }
-    # end
   end
 
   describe 'Stopping the Confluence instance' do
