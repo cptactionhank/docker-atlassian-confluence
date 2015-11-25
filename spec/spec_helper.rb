@@ -1,4 +1,5 @@
 require 'docker'
+require 'rspec'
 require 'capybara'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
@@ -68,7 +69,7 @@ RSpec.configure do |config|
     # not startup a Rails server.
     conf.run_server = false
     conf.default_driver = :poltergeist_debug
-    conf.default_wait_time = timeout
+    conf.default_max_wait_time = timeout
   end
 
   Docker::DSL.configure do |conf|

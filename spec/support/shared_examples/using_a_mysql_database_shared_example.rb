@@ -1,6 +1,3 @@
-require 'timeout'
-require 'spec_helper'
-
 shared_examples 'using a mysql database' do
 	before :all do
 		within 'form[name=standardform]' do

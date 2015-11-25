@@ -6,10 +6,10 @@
 # VERSION. If no VERSION information is specified the latest version is
 # retrieved from the Atlassian Confluence download feed.
 
-if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
-	echo "Not master branch and therefore nothing to prepare"
-	exit 0
-fi
+# if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+# 	echo "Not master branch and therefore nothing to prepare"
+# 	exit 0
+# fi
 
 echo "Obtaining Altassian JIRA version information..."
 

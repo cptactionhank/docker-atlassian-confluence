@@ -9,7 +9,9 @@ shared_examples 'a buildable docker image' do |path, options = {}|
     @container = Docker::Container.create container_options
   end
 
-  after :all do
-    @container.remove force: true, v: true unless @container.nil?
-  end
+	unless ENV["CI"] == "true"
+	  after :all do
+	    @container.remove force: true, v: true unless @container.nil?
+	  end
+	end
 end
