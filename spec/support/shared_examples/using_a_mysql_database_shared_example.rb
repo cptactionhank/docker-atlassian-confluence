@@ -1,4 +1,4 @@
-shared_examples 'using a mysql database' do
+shared_examples 'using a MySQL database' do
   before :all do
     within 'form[name=standardform]' do
       select "MySQL", :from => "dbChoiceSelect"
