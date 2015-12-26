@@ -32,7 +32,7 @@ test:
     - bin/prepare
 
 deployment:
-  newest-version-eap:
-    branch: eap
+  newest-version:
+    branch: master
     commands:
       - bin/deploy
