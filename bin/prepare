@@ -6,7 +6,7 @@
 # VERSION. If no VERSION information is specified the latest version is
 # retrieved from the Atlassian Confluence download feed.
 
-if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" && "x${1}" == "x" ]]; then
+if [[ "x${1}" == "x" && "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
 	echo "Not master branch and therefore nothing to prepare"
 	exit 0
 fi
@@ -21,7 +21,7 @@ CURRENT_VERSION=$(sed -nr 's/ENV CONF_VERSION[[:space:]]*(.+)/\1/p' Dockerfile)
 # feed information to get a JSONP formatted response, strip the output to
 # retrieve the actual content and then get the version number from the first
 # entry.
-VERSION=${1:-$(curl -Ls 'https://my.atlassian.com/download/feeds/current/confluence.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[0].version')}
+VERSION=${1:-"$(curl -Ls 'https://my.atlassian.com/download/feeds/current/confluence.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[0].version')"}
 
 # Outputs the version information
 echo "Found versions:"
@@ -37,10 +37,8 @@ sed --in-place \
     --expression "s/ENV CONF_VERSION  ${CURRENT_VERSION}/ENV CONF_VERSION  ${VERSION}/g" \
     Dockerfile
 
-# Edit the README.md by changing the announced version in the content
+# Edit the `README.md` by changing the announced version in the content
 sed --in-place \
-		--expression "s/^> Version ${CURRENT_VERSION}$/> Version ${VERSION}/g" \
-		--expression "s/docker-atlassian-confluence\/${CURRENT_VERSION}.svg/docker-atlassian-confluence\/${VERSION}.svg/g" \
 		--expression "s/${CURRENT_VERSION}/${VERSION}/g" \
 		README.md
 
