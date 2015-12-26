@@ -3,7 +3,7 @@ FROM java:7
 # Setup useful environment variables
 ENV CONF_HOME     /var/local/atlassian/confluence
 ENV CONF_INSTALL  /usr/local/atlassian/confluence
-ENV CONF_VERSION  5.5.7
+ENV CONF_VERSION  5.6
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
@@ -26,6 +26,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${CONF_INSTALL}/logs" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/work" \
     && echo -e                 "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
+    && sed --in-place='.bak'   "s/\-Xloggc\:.*\.log/-Xloggc\:'\$LOGBASEABS\/logs\/gc-%t.log'/g" "$CONF_INSTALL/bin/setenv.sh" \
     && xmlstarlet              ed --inplace \
         --delete               "Server/@debug" \
         --delete               "Server/Service/Connector/@debug" \
