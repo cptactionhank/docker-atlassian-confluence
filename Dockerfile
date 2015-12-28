@@ -4,6 +4,7 @@ FROM java:8
 ENV CONF_HOME     /var/atlassian/confluence
 ENV CONF_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  5.9.3
+ENV CONF_PATH ""
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
@@ -37,6 +38,8 @@ RUN set -x \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
                                "${CONF_INSTALL}/conf/server.xml"
 
+ADD start.sh ${CONF_INSTALL}/bin/
+
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
 # here we only ever run one process anyway.
@@ -54,4 +57,4 @@ VOLUME ["/var/atlassian/confluence"]
 WORKDIR ${CONF_HOME}
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["/opt/atlassian/confluence/bin/start-confluence.sh", "-fg"]
+CMD ["/opt/atlassian/confluence/bin/start.sh", "-fg"]
