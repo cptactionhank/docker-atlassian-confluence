@@ -4,6 +4,7 @@ FROM java:8
 ENV CONF_HOME     /var/atlassian/confluence
 ENV CONF_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  5.9.3
+ENV CONF_PATH 
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
@@ -35,6 +36,7 @@ RUN set -x \
         --delete               "Server/Service/Engine/@debug" \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
+		--update 			   "//Context/@path" --value "\${CONF_PATH}"
                                "${CONF_INSTALL}/conf/server.xml"
 
 # Use the default unprivileged account. This could be considered bad practice
