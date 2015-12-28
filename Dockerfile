@@ -36,8 +36,9 @@ RUN set -x \
         --delete               "Server/Service/Engine/@debug" \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
-		--update 			   "//Context/@path" --value "\${CONF_PATH}" \
                                "${CONF_INSTALL}/conf/server.xml"
+
+ADD start.sh ${CONF_INSTALL}/bin/
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
@@ -56,4 +57,4 @@ VOLUME ["/var/atlassian/confluence"]
 WORKDIR ${CONF_HOME}
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["/opt/atlassian/confluence/bin/start-confluence.sh", "-fg"]
+CMD ["/opt/atlassian/confluence/bin/start.sh", "-fg"]
