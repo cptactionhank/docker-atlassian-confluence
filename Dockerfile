@@ -36,7 +36,7 @@ RUN set -x \
         --delete               "Server/Service/Engine/@debug" \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
-		--update 			   "//Context/@path" --value "\${CONF_PATH}"
+		--update 			   "//Context/@path" --value "\${CONF_PATH}" \
                                "${CONF_INSTALL}/conf/server.xml"
 
 # Use the default unprivileged account. This could be considered bad practice
