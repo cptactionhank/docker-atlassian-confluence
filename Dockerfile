@@ -4,7 +4,7 @@ FROM java:8
 ENV CONF_HOME     /var/atlassian/confluence
 ENV CONF_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  5.9.3
-ENV CONF_PATH 
+ENV CONF_PATH ""
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
