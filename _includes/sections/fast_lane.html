@@ -1,0 +1,9 @@
+<section>
+	<h1>I'm in the fast lane!</h1>
+
+	<p>To quickly get started with running a Confluence instance, first run the following command:</p>
+
+	<pre><code class="bash">docker run --detach --publish 8090:<span class="dynamic" ng-bind="confluence.port" title="The exposed confluence port"></span> cptactionhank/atlassian-confluence:<span class="dynamic" ng-bind="confluence.version.name" title="The Confluence image version"></span></code></pre>
+
+	<p>Then use your browser to nagivate to <code>http://<span class="dynamic" ng-bind="confluence.host" title="The Docker host hostname"></span>:<span class="dynamic" ng-bind="confluence.port" title="The exposed Confluence port"></span></code> and finish the configuration.</p>
+</section>

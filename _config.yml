@@ -1,5 +1,5 @@
 # Site settings
-title: Atlassian Confluence Configurator
+title: <i class="fa fa-fw fa-rocket"></i> cptactionhank ❤ Docker
 email: maage@dotmaage.dk
 
 description: > # this means to ignore newlines until "baseurl:"
@@ -10,13 +10,18 @@ description: > # this means to ignore newlines until "baseurl:"
 baseurl: "/docker-atlassian-confluence" # the subpath of your site, e.g. /blog/
 url: "http://cptactionhank.github.io" # the base hostname & protocol for your site
 
-github_username: cptactionhank
-docker_username: cptactionhank
+repo:
+  github: docker-atlassian-confluence
+  docker: atlassian-confluence
 
-# Exclude these files from your production _site
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - LICENSE
-  - README.md
-  - CNAME
+author:
+  name: Martin Jensen
+  email: martin@25144754.dk
+  url: "http://25144754.dk" # the base hostname & protocol for your site
+  # facebook: cptactionhank
+  # twitter: dotmaage
+  linkedin: martinakseljensen
+  instagram: cptactionhank
+  github:  cptactionhank
+  bitbucket: maage
+  dockerhub: cptactionhank
