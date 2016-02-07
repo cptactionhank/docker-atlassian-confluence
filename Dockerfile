@@ -3,10 +3,8 @@ FROM java:8
 # Setup useful environment variables
 ENV CONF_HOME       /var/atlassian/confluence
 ENV CONF_INSTALL    /opt/atlassian/confluence
-ENV CONF_VERSION    5.9.4
 ENV CONF_PORT     8090
 ENV CONF_SCHEME   https
-ENV CONF_URL      wiki.stephanbartl.at
 ENV CONF_PROXYP   443
 ENV CONF_SECURE   true
 
