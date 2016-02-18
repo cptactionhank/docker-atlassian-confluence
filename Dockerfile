@@ -17,7 +17,7 @@ RUN set -x \
     && apt-get clean \
     && mkdir -p                         "${CONF_HOME}" \
     && chmod -R 700                     "${CONF_HOME}" \
-    && chown 1000030000:1000030000      "${CONF_HOME}" \
+    && chown 1:1                        "${CONF_HOME}" \
     && mkdir -p                         "${CONF_INSTALL}/conf" \
     && curl -Ls                         "http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
     && curl -Ls                         "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.36.tar.gz" | tar -xz --directory "${CONF_INSTALL}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.36/mysql-connector-java-5.1.36-bin.jar" \
@@ -25,11 +25,11 @@ RUN set -x \
     && chmod -R 700                     "${CONF_INSTALL}/temp" \
     && chmod -R 700                     "${CONF_INSTALL}/logs" \
     && chmod -R 700                     "${CONF_INSTALL}/work" \
-    && chown -R 1000030000:1000030000   "${CONF_INSTALL}/conf" \
-    && chown -R 1000030000:1000030000   "${CONF_INSTALL}/temp" \
-    && chown -R 1000030000:1000030000   "${CONF_INSTALL}/logs" \
-    && chown -R 1000030000:1000030000   "${CONF_INSTALL}/work" \
-    && echo -e                 "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
+    && chown -R 1:1                     "${CONF_INSTALL}/conf" \
+    && chown -R 1:1                     "${CONF_INSTALL}/temp" \
+    && chown -R 1:1                     "${CONF_INSTALL}/logs" \
+    && chown -R 1:1                     "${CONF_INSTALL}/work" \
+    && echo -e                          "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
     && xmlstarlet              ed --inplace \
         --delete               "Server/@debug" \
         --delete               "Server/Service/Connector/@debug" \
@@ -46,7 +46,7 @@ RUN set -x \
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
 # here we only ever run one process anyway.
-USER 1000030000:1000030000
+USER 1:1
 
 # Expose default HTTP connector port.
 EXPOSE 8090
