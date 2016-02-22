@@ -51,6 +51,12 @@ else
 
 	git checkout --orphan "${VERSION}"
 
+	# We do not want to include README.md in version branches since the latest
+	# built branch from the Docker Hub will use that README.md which could be
+	# misleading. Contributing is also taken out to ensure a single place for
+	# the most up-to-date information.
+	rm --recursive --force "README.md" "CONTRIBUTING.md"
+
 	# Perform initial commit with the current directory as is (ie. prepared for
 	# the new version branch).
 	echo "Committing changes"
