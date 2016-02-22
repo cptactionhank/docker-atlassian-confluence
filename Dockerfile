@@ -16,7 +16,7 @@ RUN set -x \
     && chown daemon:daemon     "${CONF_HOME}" \
     && mkdir -p                "${CONF_INSTALL}/conf" \
     && curl -Ls                "http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
-    && curl -Ls                "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.36.tar.gz" | tar -xz --directory "${CONF_INSTALL}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.36/mysql-connector-java-5.1.36-bin.jar" \
+    && curl -Ls                "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" | tar -xz --directory "${CONF_INSTALL}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
     && chmod -R 700            "${CONF_INSTALL}/conf" \
     && chmod -R 700            "${CONF_INSTALL}/temp" \
     && chmod -R 700            "${CONF_INSTALL}/logs" \
@@ -25,6 +25,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${CONF_INSTALL}/temp" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/logs" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/work" \
+    && touch -d "@0"           "/opt/atlassian/confluence/conf/server.xml" \
     && echo -e                 "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
     && xmlstarlet              ed --inplace \
         --delete               "Server/@debug" \
@@ -51,10 +52,10 @@ EXPOSE 8090
 VOLUME ["/var/atlassian/confluence"]
 
 # Set the default working directory as the Confluence home directory.
-WORKDIR ${CONF_HOME}
+WORKDIR /var/atlassian/confluence
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["/opt/atlassian/confluence/bin/start-confluence.sh", "-fg"]
+CMD ["/opt/atlassian/confluence/bin/catalina.sh", "run"]

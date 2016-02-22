@@ -6,9 +6,11 @@
 # VERSION. If no VERSION information is specified the latest version is
 # retrieved from the Atlassian Confluence download feed.
 
-if [[ "x${1}" == "x" && "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" && -z "$1" ]]; then
 	echo "Not master branch and therefore nothing to prepare"
 	exit 0
+elif [[ -n "${1}" ]]; then
+	echo "Overriding latest Atlassian Confluence to ${1}"
 fi
 
 echo "Obtaining Altassian Confluence version information..."
@@ -36,10 +38,5 @@ echo "Preparing branch for version new Atlassian Confluence version"
 sed --in-place \
     --expression "s/ENV CONF_VERSION  ${CURRENT_VERSION}/ENV CONF_VERSION  ${VERSION}/g" \
     Dockerfile
-
-# Edit the `README.md` by changing the announced version in the content
-sed --in-place \
-		--expression "s/${CURRENT_VERSION}/${VERSION}/g" \
-		README.md
 
 echo "Ready for acceptance testing"
