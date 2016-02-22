@@ -25,6 +25,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${CONF_INSTALL}/temp" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/logs" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/work" \
+    && touch -d "@0"           "/opt/atlassian/confluence/conf/server.xml" \
     && echo -e                 "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
     && xmlstarlet              ed --inplace \
         --delete               "Server/@debug" \
@@ -51,7 +52,10 @@ EXPOSE 8090
 VOLUME ["/var/atlassian/confluence"]
 
 # Set the default working directory as the Confluence home directory.
-WORKDIR ${CONF_HOME}
+WORKDIR /var/atlassian/confluence
+
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["/opt/atlassian/confluence/bin/start-confluence.sh", "-fg"]
+CMD ["/opt/atlassian/confluence/bin/catalina.sh", "run"]

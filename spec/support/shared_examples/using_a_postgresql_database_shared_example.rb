@@ -1,7 +1,7 @@
 shared_examples 'using a postgresql database' do
 	before :all do
 		within 'form[name=standardform]' do
-			select "PostgreSQL", :from => "dbChoiceSelect"
+			select 'PostgreSQL', from: 'dbChoiceSelect'
 			click_button 'External Database'
 			wait_for_page
 		end
@@ -25,7 +25,7 @@ shared_examples 'using a postgresql database' do
 	describe 'setting up JDBC Configuration' do
 		before :all do
 			within 'form[name=dbform]' do
-				fill_in 'dbConfigInfo.databaseUrl', with: "jdbc:postgresql://#{$container_postgres.host}:5432/confluencedb"
+				fill_in 'dbConfigInfo.databaseUrl', with: "jdbc:postgresql://#{@container_db.host}:5432/confluencedb"
 				fill_in 'dbConfigInfo.userName', with: 'postgres'
 				fill_in 'dbConfigInfo.password', with: 'mysecretpassword'
 				click_button 'Next'

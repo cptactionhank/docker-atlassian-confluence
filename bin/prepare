@@ -6,7 +6,7 @@
 # VERSION. If no VERSION information is specified the latest version is
 # retrieved from the Atlassian Confluence download feed.
 
-echo "Obtaining Altassian JIRA version information..."
+echo "Obtaining Altassian Confluence version information..."
 
 # Obtain the currently latest version of Atlassian Confluence version defined
 # by the Dockerfile in this repository.
@@ -31,10 +31,5 @@ echo "Preparing branch for version new Atlassian Confluence version"
 sed --in-place \
     --expression "s/ENV CONF_VERSION  ${CURRENT_VERSION}/ENV CONF_VERSION  ${VERSION}/g" \
     Dockerfile
-
-# Edit the README.md by changing the announced version in the content
-sed --in-place \
-		--expression "s/^> Version ${CURRENT_VERSION}$/> Version ${VERSION}/g" \
-		README.md
 
 echo "Ready for acceptance testing"
