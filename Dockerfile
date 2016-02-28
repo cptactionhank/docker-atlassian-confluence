@@ -25,7 +25,6 @@ RUN set -x \
     && chown -R daemon:daemon  "${CONF_INSTALL}/temp" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/logs" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/work" \
-    && touch -d "@0"           "/opt/atlassian/confluence/conf/server.xml" \
     && echo -e                 "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
     && xmlstarlet              ed --inplace \
         --delete               "Server/@debug" \
@@ -36,7 +35,8 @@ RUN set -x \
         --delete               "Server/Service/Engine/@debug" \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
-                               "${CONF_INSTALL}/conf/server.xml"
+                               "${CONF_INSTALL}/conf/server.xml" \
+    && touch -d "@0"           "/opt/atlassian/confluence/conf/server.xml"
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
