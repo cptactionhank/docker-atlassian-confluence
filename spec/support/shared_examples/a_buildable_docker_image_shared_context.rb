@@ -1,5 +1,3 @@
-require 'docker'
-
 shared_examples 'a buildable docker image' do |path, options = {}|
   subject { @container }
 
@@ -7,6 +5,8 @@ shared_examples 'a buildable docker image' do |path, options = {}|
     image = Docker::Image.build_from_dir(path)
     container_options = { Image: image.id }.merge options
     @container = Docker::Container.create container_options
+    @container.start! PublishAllPorts: true
+    @container.setup_capybara_url tcp: 8090
   end
 
 	unless ENV["CI"] == "true"

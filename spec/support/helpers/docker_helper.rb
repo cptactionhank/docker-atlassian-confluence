@@ -14,11 +14,11 @@ class Docker::Container
     json['NetworkSettings']['IPAddress']
   end
 
-  def setup_capybara_url(port)
+  def setup_capybara_url(port, path = '')
     docker_url = URI.parse Docker.url
     docker_url.host   = 'localhost' if docker_url.scheme == 'unix'
     docker_url.scheme = 'http'
-    docker_url.path   = ''
+    docker_url.path   = path
     docker_url.port   = mapped_port port
     Capybara.app_host = docker_url.to_s
   end

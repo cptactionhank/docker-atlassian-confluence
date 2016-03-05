@@ -3,7 +3,7 @@ FROM java:8
 # Setup useful environment variables
 ENV CONF_HOME     /var/atlassian/confluence
 ENV CONF_INSTALL  /opt/atlassian/confluence
-ENV CONF_VERSION  6.0.0-OD-2016.07.1-0002
+ENV CONF_VERSION  6.0.0-OD-2016.09.1-0004
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
@@ -16,7 +16,7 @@ RUN set -x \
     && chown daemon:daemon     "${CONF_HOME}" \
     && mkdir -p                "${CONF_INSTALL}/conf" \
     && curl -Ls                "http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
-    && curl -Ls                "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.36.tar.gz" | tar -xz --directory "${CONF_INSTALL}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.36/mysql-connector-java-5.1.36-bin.jar" \
+    && curl -Ls                "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" | tar -xz --directory "${CONF_INSTALL}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
     && chmod -R 700            "${CONF_INSTALL}/conf" \
     && chmod -R 700            "${CONF_INSTALL}/temp" \
     && chmod -R 700            "${CONF_INSTALL}/logs" \
@@ -25,7 +25,6 @@ RUN set -x \
     && chown -R daemon:daemon  "${CONF_INSTALL}/temp" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/logs" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/work" \
-    && touch -d "@0"           "/opt/atlassian/confluence/conf/server.xml" \
     && echo -e                 "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
     && xmlstarlet              ed --inplace \
         --delete               "Server/@debug" \
@@ -36,7 +35,8 @@ RUN set -x \
         --delete               "Server/Service/Engine/@debug" \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
-                               "${CONF_INSTALL}/conf/server.xml"
+                               "${CONF_INSTALL}/conf/server.xml" \
+    && touch -d "@0"           "/opt/atlassian/confluence/conf/server.xml" \
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but

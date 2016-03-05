@@ -1,9 +1,6 @@
 shared_examples 'an acceptable confluence instance' do |database_examples|
-  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms64m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
-  describe 'when starting a JIRA instance' do
-    before(:all) { @container.start! PublishAllPorts: true }
-
+  describe 'when running a JIRA container' do
     it { is_expected.to_not be_nil }
     it { is_expected.to be_running }
     it { is_expected.to have_mapped_ports tcp: 8090 }
@@ -13,7 +10,6 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
 
   describe 'Going through the setup process' do
     before :all do
-      @container.setup_capybara_url tcp: 8090
       visit '/'
     end
 
