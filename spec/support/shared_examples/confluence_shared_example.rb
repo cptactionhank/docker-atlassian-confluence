@@ -13,7 +13,6 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
 
   describe 'Going through the setup process' do
     before :all do
-      @container.setup_capybara_url tcp: 8090
       visit '/'
     end
 

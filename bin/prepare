@@ -28,7 +28,7 @@ VERSION=${1:-"$(curl -Ls 'https://my.atlassian.com/download/feeds/current/conflu
 # Outputs the version information
 echo "Found versions:"
 echo "  Current: ${CURRENT_VERSION}"
-echo "  New:     ${VERSION}"
+echo "  Latest:  ${VERSION}"
 echo ""
 
 echo "Preparing branch for version new Atlassian Confluence version"
