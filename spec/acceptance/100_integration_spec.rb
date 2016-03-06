@@ -84,8 +84,8 @@ describe 'Atlassian Confluence behind reverse proxy' do
 			Docker::Image.create fromImage: 'blacklabelops/nginx:latest'
 			# Create and run a nginx reverse proxy container instance
 			@container_proxy = Docker::Container.create image: 'blacklabelops/nginx:latest',
-				PortBindings: { '8080/tcp': [{ 'HostPort': '80' }] },
-				Links: ["#{@container.id}:container"],
+				portBindings: { '8080/tcp': [{ 'HostPort': '80' }] },
+				links: ["#{@container.id}:container"],
 				env: ['SERVER1REVERSE_PROXY_LOCATION1=/', 'SERVER1REVERSE_PROXY_PASS1=http://container:8090/']
 			@container_proxy.start!
 			@container_proxy.setup_capybara_url({ tcp: 8080 }, '/confluence/')
