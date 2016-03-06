@@ -5,6 +5,7 @@ require 'rspec'
 require 'rspec/expectations'
 
 class Docker::Container
+
   def mapped_port(port)
     port_string = port.first.reverse.join '/'
     json['NetworkSettings']['Ports'][port_string].first['HostPort']
@@ -34,6 +35,7 @@ class Docker::Container
       timeout(Docker::DSL.timeout) do
         Thread.handle_interrupt(TimeoutError => :on_blocking) do
           self.streaming_logs stdout: true, stderr: true, tail: 'all', follow: true do |_, chunk|
+            STDERR.puts "#{_} #{chunk}"
             Thread.exit if chunk =~ regex
           end
         end
@@ -41,4 +43,5 @@ class Docker::Container
     end
     thread.join
   end
+
 end

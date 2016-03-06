@@ -118,4 +118,5 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
 
     include_examples 'a clean console'
   end
+
 end

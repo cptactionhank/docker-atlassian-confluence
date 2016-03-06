@@ -1,4 +1,5 @@
 shared_examples 'using a PostgreSQL database' do
+
   before :all do
     within 'form[name=standardform]' do
       select "PostgreSQL", :from => "dbChoiceSelect"
@@ -37,4 +38,5 @@ shared_examples 'using a PostgreSQL database' do
     it { is_expected.to have_css 'form#demoChoiceForm' }
     it { is_expected.to have_button 'Example Site' }
   end
+
 end

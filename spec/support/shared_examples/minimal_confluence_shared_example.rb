@@ -8,7 +8,7 @@ shared_examples 'a minimal acceptable Confluence instance' do
     it { is_expected.to wait_until_output_matches REGEX_STARTUP }
   end
 
-  describe 'Testing the web interface' do
+  describe 'when testing the web interface' do
     before :all do
       visit '/'
     end

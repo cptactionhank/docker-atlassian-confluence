@@ -1,4 +1,5 @@
 shared_examples 'a buildable Docker image' do |path, options = {}|
+
   subject { @container }
 
   before :all do
@@ -10,7 +11,11 @@ shared_examples 'a buildable Docker image' do |path, options = {}|
   end
 
   after :all do
-    @container.remove force: true, v: true unless @container.nil?
+    if ENV['CIRCLECI']
+      @container.kill signal: 'SIGKILL'
+    else
+      @container.remove force: true, v: true
+    end
   end
 
 end
