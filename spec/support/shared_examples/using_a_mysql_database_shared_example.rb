@@ -25,7 +25,7 @@ shared_examples 'using a MySQL database' do
   describe 'setting up JDBC Configuration' do
     before :all do
       within 'form[name=dbform]' do
-        fill_in 'dbConfigInfo.databaseUrl', with: "jdbc:mysql://#{$container_mysql.host}/confluencedb?sessionVariables=storage_engine%3DInnoDB&useUnicode=true&characterEncoding=utf8"
+        fill_in 'dbConfigInfo.databaseUrl', with: "jdbc:mysql://#{@container_db.host}/confluencedb?sessionVariables=storage_engine%3DInnoDB&useUnicode=true&characterEncoding=utf8"
         fill_in 'dbConfigInfo.userName', with: 'root'
         fill_in 'dbConfigInfo.password', with: 'mysecretpassword'
         click_button 'Next'

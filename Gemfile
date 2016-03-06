@@ -16,6 +16,6 @@ group :test do
   gem 'rspec_junit_formatter'
 
   gem 'pry'
-  gem 'byebug'
   gem 'pry-rescue'
+  gem 'byebug'
 end

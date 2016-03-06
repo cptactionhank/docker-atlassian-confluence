@@ -24,7 +24,7 @@ else
 
 	# add changes made to current branch
 	git add --all
-	git commit --message "Updated Atlassian JIRA master branch to latest version ${VERSION}"
+	git commit --message "Updated Atlassian Confluence master branch to latest version ${VERSION}"
 
 	# push changes made to current branch
 	git push origin master
