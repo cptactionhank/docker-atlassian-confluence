@@ -11,5 +11,5 @@ before_install:
   - docker pull mysql:5.6
   - docker pull java:8
   - docker build .
-
-script: travis_wait 30 bundle exec rake
+  - travis_wait 30 &
+  
