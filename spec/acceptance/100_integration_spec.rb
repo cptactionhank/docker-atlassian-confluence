@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe 'Atlassian Confluence with Embedded Database' do
 
-	include_examples 'a buildable Docker image', '.', { Env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"] }
+	include_examples 'a buildable Docker image', '.', { env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"] }
 
 	include_examples 'an acceptable Confluence instance', 'using an embedded database'
 
@@ -11,7 +11,7 @@ end
 
 describe 'Atlassian Confluence with PostgreSQL 9.3 Database' do
 
-	include_examples 'a buildable Docker image', '.', { Env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"] }
+	include_examples 'a buildable Docker image', '.', { env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"] }
 
 	include_examples 'an acceptable Confluence instance', 'using a PostgreSQL database' do
 		before :all do
@@ -40,7 +40,7 @@ end
 
 describe 'Atlassian Confluence with MySQL 5.6 Database' do
 
-	include_examples 'a buildable Docker image', '.', { Env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"] }
+	include_examples 'a buildable Docker image', '.', { env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"] }
 
 	include_examples 'an acceptable Confluence instance', 'using a MySQL database' do
 		before :all do
@@ -70,7 +70,7 @@ end
 describe 'Atlassian Confluence behind reverse proxy' do
 
 	include_examples 'a buildable Docker image', '.', {
-		Env: [
+		env: [
 			"CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}",
 			"X_PROXY_NAME=#{Docker.info['Name']}",
 			'X_PROXY_PORT=80',
@@ -86,7 +86,7 @@ describe 'Atlassian Confluence behind reverse proxy' do
 			@container_proxy = Docker::Container.create image: 'blacklabelops/nginx:latest',
 				PortBindings: { '8080/tcp': [{ 'HostPort': '80' }] },
 				Links: ["#{@container.id}:container"],
-				Env: ['SERVER1REVERSE_PROXY_LOCATION1=/', 'SERVER1REVERSE_PROXY_PASS1=http://container:8090/']
+				env: ['SERVER1REVERSE_PROXY_LOCATION1=/', 'SERVER1REVERSE_PROXY_PASS1=http://container:8090/']
 			@container_proxy.start!
 			@container_proxy.setup_capybara_url({ tcp: 8080 }, '/confluence/')
 		end
