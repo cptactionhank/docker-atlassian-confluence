@@ -1,4 +1,5 @@
 require 'docker'
+require 'rspec'
 require 'capybara'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
@@ -25,6 +26,7 @@ RSpec.configure do |config|
 
   # set the default timeout to 10 minutes.
   timeout = 600
+  timeout = 1200 if ENV['CI']
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

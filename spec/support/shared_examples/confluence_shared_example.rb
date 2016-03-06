@@ -1,29 +1,16 @@
-require 'timeout'
-require 'spec_helper'
-
 shared_examples 'an acceptable Confluence instance' do |database_examples|
-  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms64m"]
 
-  describe 'when starting a Confluence instance' do
-    before(:all) { @container.start! PublishAllPorts: true }
-
-    it { is_expected.to_not be_nil }
-    it { is_expected.to be_running }
-    it { is_expected.to have_mapped_ports tcp: 8090 }
-    it { is_expected.not_to have_mapped_ports udp: 8090 }
-    it { is_expected.to wait_until_output_matches REGEX_STARTUP }
-  end
+  include_examples 'a minimal acceptable Confluence instance'
 
   describe 'Going through the setup process' do
+    before :all do
+      visit '/'
+    end
+
     subject { page }
 
     context 'when visiting the root page' do
-      before :all do
-        @container.setup_capybara_url tcp: 8090
-        visit '/'
-      end
-
-      it { expect(current_path).to match %r{^/setup/setupstart.action} }
+      it { expect(current_path).to match '/setup/setupstart.action' }
       it { is_expected.to have_css 'form[name=startform]' }
       it { is_expected.to have_button 'Start setup' }
     end
@@ -120,7 +107,7 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
     it 'should shut down successful' do
       # give the container up to 5 minutes to successfully shutdown
       # exit code: 128+n Fatal error signal "n", ie. 143 = fatal error signal
-      # SIGTERM
+      # SIGTERM.
       #
       # The following state check has been left out 'ExitCode' => 143 to
       # suppor CircleCI as CI builder. For some reason whether you send SIGTERM
