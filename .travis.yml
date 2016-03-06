@@ -6,6 +6,10 @@ services:
   - docker
 
 before_install:
+  - docker pull blacklabelops/nginx:latest
   - docker pull postgres:9.3
   - docker pull mysql:5.6
+  - docker pull java:8
   - docker build .
+
+script: travis_wait 30 bundle exec rake
