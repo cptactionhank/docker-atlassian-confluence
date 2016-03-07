@@ -35,6 +35,7 @@ class Docker::Container
       timeout(Docker::DSL.timeout) do
         Thread.handle_interrupt(TimeoutError => :on_blocking) do
           self.streaming_logs stdout: true, stderr: true, tail: 'all', follow: true do |_, chunk|
+            STDERR.puts "#{_} #{chunk}"
             Thread.exit if chunk =~ regex
           end
         end
