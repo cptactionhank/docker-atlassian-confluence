@@ -81,6 +81,9 @@ describe 'Atlassian Confluence behind reverse proxy' do
 
 	include_examples 'a minimal acceptable Confluence instance' do
 		before :all do
+			require 'pp'
+			pp Docker::Container.all
+			
 			Docker::Image.create fromImage: 'blacklabelops/nginx:latest'
 			# Create and run a nginx reverse proxy container instance
 			@container_proxy = Docker::Container.create image: 'blacklabelops/nginx:latest',
