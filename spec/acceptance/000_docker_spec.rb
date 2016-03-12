@@ -2,7 +2,6 @@ require 'docker'
 require 'spec_helper'
 
 describe 'Docker image building' do
-
   context 'when validating host software' do
     it 'should supported version' do
       expect { Docker.validate_version! }.to_not raise_error
@@ -19,5 +18,4 @@ describe 'Docker image building' do
     it { is_expected.not_to have_volume '/usr/local/atlassian/confluence' }
     it { is_expected.to have_working_directory '/var/local/atlassian/confluence' }
   end
-
 end

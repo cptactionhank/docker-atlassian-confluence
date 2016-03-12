@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/ConradIrwin/pry-rescue.git
+  revision: 3d42ae3b56292a24c12ad4e491df4157432e85b2
+  specs:
+    pry-rescue (1.4.3)
+      interception (>= 0.5)
+      pry
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -25,10 +33,6 @@ GEM
     mime-types-data (3.2015.1120)
     mini_portile2 (2.0.0)
     multi_json (1.11.2)
-    net-scp (1.2.1)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.9.2)
-    net-telnet (0.1.1)
     nokogiri (1.6.7)
       mini_portile2 (~> 2.0.0.rc2)
     poltergeist (1.8.1)
@@ -43,9 +47,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-rescue (1.4.2)
-      interception (>= 0.5)
-      pry
+    pry-byebug (3.3.0)
+      byebug (~> 8.0)
+      pry (~> 0.10)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -59,9 +63,6 @@ GEM
     rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
-    rspec-its (1.2.0)
-      rspec-core (>= 3.0.0)
-      rspec-expectations (>= 3.0.0)
     rspec-mocks (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
@@ -69,18 +70,7 @@ GEM
     rspec_junit_formatter (0.2.3)
       builder (< 4)
       rspec-core (>= 2, < 4, != 2.12.0)
-    serverspec (2.24.3)
-      multi_json
-      rspec (~> 3.0)
-      rspec-its
-      specinfra (~> 2.43)
-    sfl (2.2)
     slop (3.6.0)
-    specinfra (2.44.6)
-      net-scp
-      net-ssh (~> 2.7)
-      net-telnet
-      sfl
     websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -98,8 +88,11 @@ DEPENDENCIES
   poltergeist
   poltergeist-suppressor
   pry
-  pry-rescue
+  pry-byebug
+  pry-rescue!
   rake
   rspec
   rspec_junit_formatter
-  serverspec
+
+BUNDLED WITH
+   1.11.2

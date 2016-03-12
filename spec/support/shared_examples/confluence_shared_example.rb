@@ -1,13 +1,10 @@
 shared_examples 'an acceptable Confluence instance' do |database_examples|
-
-  include_examples 'a minimal acceptable Confluence instance'
+  subject { page }
 
   describe 'Going through the setup process' do
     before :all do
       visit '/'
     end
-
-    subject { page }
 
     context 'when visiting the root page' do
       it { expect(current_path).to match '/setup/setupstart.action' }
@@ -102,7 +99,11 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
   end
 
   describe 'Stopping the Confluence instance' do
-    before(:all) { @container.kill_and_wait signal: 'SIGTERM' }
+    subject { @container }
+
+    before :all do
+      @container.kill_and_wait signal: 'SIGTERM'
+    end
 
     it 'should shut down successful' do
       # give the container up to 5 minutes to successfully shutdown
@@ -117,6 +118,6 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
     end
 
     include_examples 'a clean console'
+    include_examples 'a clean logfile', '/var/local/atlassian/confluence/logs/atlassian-confluence.log'
   end
-
 end

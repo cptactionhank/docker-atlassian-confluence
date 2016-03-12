@@ -49,10 +49,10 @@ EXPOSE 8090
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/local/atlassian/confluence"]
+VOLUME ["/var/local/atlassian/confluence", "/usr/local/atlassian/confluence/logs"]
 
 # Set the default working directory as the Confluence home directory.
 WORKDIR /var/local/atlassian/confluence
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["/usr/local/atlassian/confluence/bin/start-confluence.sh", "-fg"]
+CMD ["/usr/local/atlassian/confluence/bin/catalina.sh", "run"]
