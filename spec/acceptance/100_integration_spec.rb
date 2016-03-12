@@ -2,13 +2,13 @@ require 'timeout'
 require 'spec_helper'
 
 describe 'Atlassian Confluence with Embedded Database' do
-  include_examples 'a buildable Docker image', '.', { env: ["CATALINA_OPTS=-Xms2G -Xmx2G -XX:+UseG1GC -XX:+AggressiveOpts -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"] }
+  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms2G -Xmx2G -XX:+UseG1GC -XX:+AggressiveOpts -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
   include_examples 'an acceptable Confluence instance', 'using an embedded database'
 end
 
 describe 'Atlassian Confluence with PostgreSQL 9.3 Database' do
-  include_examples 'a buildable Docker image', '.', { env: ["CATALINA_OPTS=-Xms2G -Xmx2G -XX:+UseG1GC -XX:+AggressiveOpts -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"] }
+  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms2G -Xmx2G -XX:+UseG1GC -XX:+AggressiveOpts -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
   include_examples 'an acceptable Confluence instance', 'using a PostgreSQL database' do
     before :all do
