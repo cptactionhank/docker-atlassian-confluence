@@ -15,8 +15,7 @@ group :test do
 end
 
 group :development do
-  gem 'byebug'
   gem 'pry'
-  gem 'pry-byebug'
   gem 'pry-rescue', git: 'git://github.com/ConradIrwin/pry-rescue.git'
+  gem 'pry-stack_explorer'
 end
