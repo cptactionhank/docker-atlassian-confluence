@@ -1,7 +1,7 @@
 shared_examples 'using a MySQL database' do
   before :all do
     within 'form[name=standardform]' do
-      select "MySQL", :from => "dbChoiceSelect"
+      select 'MySQL', from: 'dbChoiceSelect'
       click_button 'External Database'
       wait_for_page
     end

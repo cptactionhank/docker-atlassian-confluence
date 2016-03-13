@@ -1,7 +1,7 @@
 shared_examples 'using a PostgreSQL database' do
   before :all do
     within 'form[name=standardform]' do
-      select "PostgreSQL", :from => "dbChoiceSelect"
+      select 'PostgreSQL', from: 'dbChoiceSelect'
       click_button 'External Database'
       wait_for_page
     end
