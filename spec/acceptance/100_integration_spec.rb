@@ -60,36 +60,32 @@ describe 'Atlassian Confluence with MySQL 5.6 Database' do
   end
 end
 
-# describe 'Atlassian Confluence behind reverse proxy' do
-#   include_examples 'a buildable Docker image', '.',
-#     env: [
-#       "CATALINA_OPTS=-Xms256m -Xmx512m -XX:MaxPermSize=256m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}",
-#       "X_PROXY_NAME=#{Docker.info['Name']}",
-#       'X_PROXY_PORT=1234',
-#       'X_PROXY_SCHEME=http',
-#       'X_PATH=/confluence'
-#     ]
-#
-#   include_examples 'an acceptable Confluence instance', 'using an embedded database' do
-#     before :all do
-#       Docker::Image.create fromImage: 'blacklabelops/nginx:latest'
-#       # Create and run a nginx reverse proxy container instance
-#       @container_proxy = Docker::Container.create image: 'blacklabelops/nginx:latest',
-#         portBindings: { '8080/tcp' => [{ 'HostPort' => '1234' }] },
-#         links: ["#{@container.id}:container"],
-#         env: [
-#           'SERVER1REVERSE_PROXY_LOCATION1=/confluence',
-#           'SERVER1REVERSE_PROXY_PASS1=http://container:8090/confluence'
-#         ]
-#       @container_proxy.start!
-#       @container_proxy.setup_capybara_url({ tcp: 8080 }, '/confluence/')
-#     end
-#     after :all do
-#       if ENV['CIRCLECI']
-#         @container_proxy.kill signal: 'SIGKILL' unless @container_proxy.nil?
-#       else
-#         @container_proxy.remove force: true, v: true unless @container_proxy.nil?
-#       end
-#     end
-#   end
-# end
+describe 'Atlassian Confluence behind reverse proxy' do
+  include_examples 'a buildable Docker image', '.',
+    env: [
+      "CATALINA_OPTS=-Xms256m -Xmx512m -XX:MaxPermSize=256m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}",
+      "X_PROXY_NAME=#{Docker.info['Name']}",
+      'X_PROXY_PORT=1234',
+      'X_PROXY_SCHEME=http',
+      'X_PATH=/confluence'
+    ]
+
+  include_examples 'an acceptable Confluence instance', 'using an embedded database' do
+    before :all do
+      image = Docker::Image.build_from_dir '.docker/nginx'
+      # Create and run a nginx reverse proxy container instance
+      @container_proxy = Docker::Container.create image: image.id,
+        portBindings: { '80/tcp' => [{ 'HostPort' => '1234' }] },
+        links: ["#{@container.id}:container"]
+      @container_proxy.start!
+      @container_proxy.setup_capybara_url({ tcp: 80 }, '/confluence/')
+    end
+    after :all do
+      if ENV['CIRCLECI']
+        @container_proxy.kill signal: 'SIGKILL' unless @container_proxy.nil?
+      else
+        @container_proxy.remove force: true, v: true unless @container_proxy.nil?
+      end
+    end
+  end
+end

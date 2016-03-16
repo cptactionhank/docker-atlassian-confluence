@@ -19,7 +19,6 @@ GEM
       excon (>= 0.38.0)
       json
     excon (0.48.0)
-    interception (0.5)
     json (1.8.3)
     method_source (0.8.2)
     mime-types (3.0)
@@ -45,9 +44,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-rescue (1.4.2)
-      interception (>= 0.5)
-      pry
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -100,7 +96,6 @@ DEPENDENCIES
   poltergeist
   poltergeist-suppressor
   pry
-  pry-rescue
   rake
   rspec
   rspec_junit_formatter
