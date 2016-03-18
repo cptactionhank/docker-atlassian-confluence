@@ -16,7 +16,7 @@ RUN set -x \
     && chown daemon:daemon     "${CONF_HOME}" \
     && mkdir -p                "${CONF_INSTALL}/conf" \
     && curl -Ls                "http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz" | tar -xz --directory "${CONF_INSTALL}" --strip-components=1 --no-same-owner \
-    && curl -Ls                "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.36.tar.gz" | tar -xz --directory "${CONF_INSTALL}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.36/mysql-connector-java-5.1.36-bin.jar" \
+    && curl -Ls                "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" | tar -xz --directory "${CONF_INSTALL}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
     && chmod -R 700            "${CONF_INSTALL}/conf" \
     && chmod -R 700            "${CONF_INSTALL}/temp" \
     && chmod -R 700            "${CONF_INSTALL}/logs" \
@@ -36,7 +36,8 @@ RUN set -x \
         --delete               "Server/Service/Engine/@debug" \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
-                               "${CONF_INSTALL}/conf/server.xml"
+                               "${CONF_INSTALL}/conf/server.xml" \
+    && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml"
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
@@ -49,10 +50,13 @@ EXPOSE 8090
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/local/atlassian/confluence"]
+VOLUME ["/var/local/atlassian/confluence", "/usr/local/atlassian/confluence/logs"]
 
 # Set the default working directory as the Confluence home directory.
-WORKDIR ${CONF_HOME}
+WORKDIR /var/local/atlassian/confluence
 
-# Run Atlassian JIRA as a foreground process by default.
-CMD ["/usr/local/atlassian/confluence/bin/start-confluence.sh", "-fg"]
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# Run Atlassian Confluence as a foreground process by default.
+CMD ["/usr/local/atlassian/confluence/bin/catalina.sh", "run"]
