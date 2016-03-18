@@ -17,5 +17,4 @@ group :test do
 
   gem 'pry'
   gem 'byebug'
-  gem 'pry-rescue'
 end
