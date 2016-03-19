@@ -9,7 +9,7 @@ REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_STARTUP = /Server startup in \d+ ms/
 REGEX_FILTER  = Regexp.compile Regexp.union [
-  /Bundle\ org\.springframework\.osgi\.extender\ \[2\]\ EventDispatcher:\ Error\ during\ dispatch\.\ \(java\.lang\.NullPointerException\)/,
+  /Bundle\ org\.springframework\.osgi\.extender\ \[.*\]\ EventDispatcher:\ Error\ during\ dispatch\.\ \(java\.lang\.NullPointerException\)/,
   /The\ executor\ associated\ with\ thread\ pool\ \[http\-bio\-8090\]\ has\ not\ fully\ shutdown\.\ Some\ application\ threads\ may\ still\ be\ running\./,
   # some errors about unregistering JDBC drivers
   /The\ web\ application\ \[.*\]\ registered\ the\ JDBC\ driver\ \[.*\]\ but\ failed\ to\ unregister\ it\ when\ the\ web\ application\ was\ stopped\.\ To\ prevent\ a\ memory\ leak,\ the\ JDBC\ Driver\ has\ been\ forcibly\ unregistered\./,
