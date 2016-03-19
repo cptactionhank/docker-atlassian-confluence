@@ -1,5 +1,6 @@
 require 'docker'
 require 'capybara'
+require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
 
@@ -7,14 +8,14 @@ REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  = Regexp.compile (Regexp.union [
+REGEX_FILTER  = Regexp.compile Regexp.union [
   /The\ executor\ associated\ with\ thread\ pool\ \[http\-bio\-8090\]\ has\ not\ fully\ shutdown\.\ Some\ application\ threads\ may\ still\ be\ running\./,
   # some errors about unregistering JDBC drivers
-  /The\ web\ application\ \[\]\ registered\ the\ JDBC\ driver\ \[.*\]\ but\ failed\ to\ unregister\ it\ when\ the\ web\ application\ was\ stopped\.\ To\ prevent\ a\ memory\ leak,\ the\ JDBC\ Driver\ has\ been\ forcibly\ unregistered\./,
+  /The\ web\ application\ \[.*\]\ registered\ the\ JDBC\ driver\ \[.*\]\ but\ failed\ to\ unregister\ it\ when\ the\ web\ application\ was\ stopped\.\ To\ prevent\ a\ memory\ leak,\ the\ JDBC\ Driver\ has\ been\ forcibly\ unregistered\./,
   # after adding database step
   /The\ web\ application\ \[.*\]\ appears\ to\ have\ started\ a\ thread\ named\ \[.*\]\ but\ has\ failed\ to\ stop\ it\.\ This\ is\ very\ likely\ to\ create\ a\ memory\ leak\./,
   /The\ web\ application\ \[.*\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ \[.*\]\ \(.*\)\ but\ failed\ to\ remove\ it\ when\ the\ web\ application\ was\ stopped\.\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./
-])
+]
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
