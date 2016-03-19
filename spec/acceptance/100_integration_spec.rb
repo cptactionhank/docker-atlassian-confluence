@@ -1,11 +1,11 @@
 describe 'Atlassian Confluence with Embedded Database' do
-  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms256m -Xmx512m -XX:MaxPermSize=256m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
+  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms1024m -Xmx1024m -XX:MaxPermSize=256m -XX:+UseG1GC -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
   include_examples 'an acceptable Confluence instance', 'using an embedded database'
 end
 
 describe 'Atlassian Confluence with PostgreSQL 9.3 Database' do
-  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms256m -Xmx512m -XX:MaxPermSize=256m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
+  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms1024m -Xmx1024m -XX:MaxPermSize=256m -XX:+UseG1GC -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
   include_examples 'an acceptable Confluence instance', 'using a PostgreSQL database' do
     before :all do
@@ -33,7 +33,7 @@ describe 'Atlassian Confluence with PostgreSQL 9.3 Database' do
 end
 
 describe 'Atlassian Confluence with MySQL 5.6 Database' do
-  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms256m -Xmx512m -XX:MaxPermSize=256m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
+  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms1024m -Xmx1024m -XX:MaxPermSize=256m -XX:+UseG1GC -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
   include_examples 'an acceptable Confluence instance', 'using a MySQL database' do
     before :all do
@@ -63,7 +63,7 @@ end
 describe 'Atlassian Confluence behind reverse proxy' do
   include_examples 'a buildable Docker image', '.',
     env: [
-      "CATALINA_OPTS=-Xms256m -Xmx512m -XX:MaxPermSize=256m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}",
+      "CATALINA_OPTS=-Xms1024m -Xmx1024m -XX:MaxPermSize=256m -XX:+UseG1GC -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}",
       "X_PROXY_NAME=#{Docker.info['Name']}",
       'X_PROXY_PORT=1234',
       'X_PROXY_SCHEME=http',
