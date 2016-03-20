@@ -1,8 +1,8 @@
 FROM java:8
 
 # Setup useful environment variables
-ENV CONF_HOME     /var/local/atlassian/confluence
-ENV CONF_INSTALL  /usr/local/atlassian/confluence
+ENV CONF_HOME     /var/atlassian/confluence
+ENV CONF_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  5.9.2
 
 # Install Atlassian Confluence and helper tools and setup initial home
@@ -49,13 +49,13 @@ EXPOSE 8090
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/local/atlassian/confluence", "/usr/local/atlassian/confluence/logs"]
+VOLUME ["/var/atlassian/confluence", "/opt/atlassian/confluence/logs"]
 
 # Set the default working directory as the Confluence home directory.
-WORKDIR /var/local/atlassian/confluence
+WORKDIR /var/atlassian/confluence
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["/usr/local/atlassian/confluence/bin/catalina.sh", "run"]
+CMD ["/opt/atlassian/confluence/bin/catalina.sh", "run"]
