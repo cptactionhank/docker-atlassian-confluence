@@ -1,29 +1,13 @@
-require 'timeout'
-require 'spec_helper'
-
 shared_examples 'an acceptable Confluence instance' do |database_examples|
-  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms64m"]
-
-  describe 'when starting a Confluence instance' do
-    before(:all) { @container.start! PublishAllPorts: true }
-
-    it { is_expected.to_not be_nil }
-    it { is_expected.to be_running }
-    it { is_expected.to have_mapped_ports tcp: 8090 }
-    it { is_expected.not_to have_mapped_ports udp: 8090 }
-    it { is_expected.to wait_until_output_matches REGEX_STARTUP }
-  end
-
   describe 'Going through the setup process' do
     subject { page }
 
     context 'when visiting the root page' do
       before :all do
-        @container.setup_capybara_url tcp: 8090
         visit '/'
       end
 
-      it { expect(current_path).to match '/setup/setupstart.action' }
+      it { is_expected.to have_current_path %r{/setup/setupstart.action} }
       it { is_expected.to have_css 'form[name=startform]' }
       it { is_expected.to have_css 'div.confluence-setup-choice-box[setup-type=custom]' }
     end
@@ -36,7 +20,7 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/selectbundle.action' }
+      it { have_current_path %r{/setup/selectbundle.action} }
       it { is_expected.to have_css 'form#selectBundlePluginsForm' }
       it { is_expected.to have_button 'Next' }
     end
@@ -48,7 +32,7 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/setuplicense.action' }
+      it { is_expected.to have_current_path %r{/setup/setuplicense.action} }
       it { is_expected.to have_css 'form#licenseform' }
       it { is_expected.to have_field 'confLicenseString' }
       it { is_expected.to have_button 'Next' }
@@ -62,7 +46,7 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match 'setup/setupdbchoice-start.action' }
+      it { is_expected.to have_current_path %r{/setup/setupdbchoice-start.action} }
       it { is_expected.to have_css 'form[name=standardform]' }
       it { is_expected.to have_css 'form[name=embeddedform]' }
     end
@@ -78,7 +62,7 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/setupusermanagementchoice-start.action' }
+      it { is_expected.to have_current_path %r{/setup/setupusermanagementchoice-start.action} }
       it { is_expected.to have_css 'form[name=internaluser]' }
       it { is_expected.to have_button 'Manage users and groups within Confluence' }
     end
@@ -90,7 +74,7 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/setupadministrator-start.action' }
+      it { is_expected.to have_current_path %r{/setup/setupadministrator-start.action} }
       it { is_expected.to have_css 'form[name=setupadministratorform]' }
       it { is_expected.to have_field 'username' }
       it { is_expected.to have_field 'fullName' }
@@ -112,7 +96,7 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/finishsetup.action' }
+      it { is_expected.to have_current_path %r{/setup/finishsetup.action} }
       it { is_expected.to have_link 'Start' }
     end
 
@@ -121,7 +105,7 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
         click_link 'Start'
       end
 
-      it { expect(current_path).to match '/welcome.action' }
+      it { is_expected.to have_current_path %r{/welcome.action} }
       # The acceptance testing comes to an end here since we got to the
       # Confluence dashboard without any trouble through the setup.
     end
@@ -129,6 +113,8 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
 
   describe 'Stopping the Confluence instance' do
     before(:all) { @container.kill_and_wait signal: 'SIGTERM' }
+
+    subject { @container }
 
     it 'should shut down successful' do
       # give the container up to 5 minutes to successfully shutdown
