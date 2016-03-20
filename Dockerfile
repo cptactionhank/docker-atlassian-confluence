@@ -36,26 +36,26 @@ RUN set -x \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
                                "${CONF_INSTALL}/conf/server.xml" \
-    && touch -d "@0"           "/opt/atlassian/confluence/conf/server.xml"
+     && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml"
 
-# Use the default unprivileged account. This could be considered bad practice
-# on systems where multiple processes end up being executed by 'daemon' but
-# here we only ever run one process anyway.
-USER daemon:daemon
+ # Use the default unprivileged account. This could be considered bad practice
+ # on systems where multiple processes end up being executed by 'daemon' but
+ # here we only ever run one process anyway.
+ USER daemon:daemon
 
-# Expose default HTTP connector port.
-EXPOSE 8090
+ # Expose default HTTP connector port.
+ EXPOSE 8090
 
-# Set volume mount points for installation and home directory. Changes to the
-# home directory needs to be persisted as well as parts of the installation
-# directory due to eg. logs.
-VOLUME ["/var/atlassian/confluence"]
+ # Set volume mount points for installation and home directory. Changes to the
+ # home directory needs to be persisted as well as parts of the installation
+ # directory due to eg. logs.
+ VOLUME ["/var/atlassian/confluence", "/opt/atlassian/confluence/logs"]
 
-# Set the default working directory as the Confluence home directory.
-WORKDIR /var/atlassian/confluence
+ # Set the default working directory as the Confluence home directory.
+ WORKDIR /var/atlassian/confluence
 
-COPY docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ COPY docker-entrypoint.sh /
+ ENTRYPOINT ["/docker-entrypoint.sh"]
 
-# Run Atlassian Confluence as a foreground process by default.
-CMD ["/opt/atlassian/confluence/bin/catalina.sh", "run"]
+ # Run Atlassian Confluence as a foreground process by default.
+ CMD ["/opt/atlassian/confluence/bin/catalina.sh", "run"]
