@@ -53,8 +53,6 @@ GEM
     rspec-mocks (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
-    rspec-retry (0.4.5)
-      rspec-core
     rspec-support (3.4.1)
     rspec_junit_formatter (0.2.3)
       builder (< 4)
@@ -78,7 +76,6 @@ DEPENDENCIES
   pry
   rake
   rspec
-  rspec-retry
   rspec_junit_formatter
 
 BUNDLED WITH
