@@ -1,6 +1,3 @@
-require 'docker'
-require 'spec_helper'
-
 describe 'Docker image building' do
   context 'when validating host software' do
     it 'should supported version' do
@@ -15,7 +12,7 @@ describe 'Docker image building' do
     it { is_expected.to have_exposed_port tcp: 8090 }
     it { is_expected.to_not have_exposed_port udp: 8090 }
     it { is_expected.to have_volume '/var/local/atlassian/confluence' }
-    it { is_expected.not_to have_volume '/usr/local/atlassian/confluence' }
+    it { is_expected.to have_volume '/usr/local/atlassian/confluence/logs' }
     it { is_expected.to have_working_directory '/var/local/atlassian/confluence' }
   end
 end
