@@ -1,28 +1,18 @@
-shared_examples 'an acceptable confluence instance' do |database_examples|
-
-  describe 'when running a JIRA container' do
-    it { is_expected.to_not be_nil }
-    it { is_expected.to be_running }
-    it { is_expected.to have_mapped_ports tcp: 8090 }
-    it { is_expected.not_to have_mapped_ports udp: 8090 }
-    it { is_expected.to wait_until_output_matches REGEX_STARTUP }
-  end
-
+shared_examples 'an acceptable Confluence instance' do |database_examples|
   describe 'Going through the setup process' do
-    before :all do
-      visit '/'
-    end
-
     subject { page }
 
     context 'when visiting the root page' do
-      it { expect(current_path).to match '/setup/setupstart.action' }
+      before :all do
+        visit '/'
+      end
+
+      it { is_expected.to have_current_path %r{/setup/setupstart.action} }
       it { is_expected.to have_css 'form[name=startform]' }
       it { is_expected.to have_css 'div.confluence-setup-choice-box[setup-type=custom]' }
-      # it { is_expected.to have_button 'Next' } for some reason this does not work
     end
 
-    context 'when manually setting up the instance' do
+    context 'when processing welcome setup' do
       before :all do
         within 'form[name=startform]' do
           find(:css, 'div.confluence-setup-choice-box[setup-type=custom]').trigger('click')
@@ -30,7 +20,7 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/selectbundle.action' }
+      it { have_current_path %r{/setup/selectbundle.action} }
       it { is_expected.to have_css 'form#selectBundlePluginsForm' }
       it { is_expected.to have_button 'Next' }
     end
@@ -42,7 +32,7 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/setuplicense.action' }
+      it { is_expected.to have_current_path %r{/setup/setuplicense.action} }
       it { is_expected.to have_css 'form#licenseform' }
       it { is_expected.to have_field 'confLicenseString' }
       it { is_expected.to have_button 'Next' }
@@ -56,9 +46,9 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/setupdbchoice-start.action' }
+      it { is_expected.to have_current_path %r{/setup/setupdbchoice-start.action} }
+      it { is_expected.to have_css 'form[name=standardform]' }
       it { is_expected.to have_css 'form[name=embeddedform]' }
-      it { is_expected.to have_button 'Embedded Database' }
     end
 
     context 'when processing database setup' do
@@ -72,7 +62,7 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/setupusermanagementchoice-start.action' }
+      it { is_expected.to have_current_path %r{/setup/setupusermanagementchoice-start.action} }
       it { is_expected.to have_css 'form[name=internaluser]' }
       it { is_expected.to have_button 'Manage users and groups within Confluence' }
     end
@@ -84,7 +74,7 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/setup/setupadministrator-start.action' }
+      it { is_expected.to have_current_path %r{/setup/setupadministrator-start.action} }
       it { is_expected.to have_css 'form[name=setupadministratorform]' }
       it { is_expected.to have_field 'username' }
       it { is_expected.to have_field 'fullName' }
@@ -99,14 +89,14 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
         within 'form[name=setupadministratorform]' do
           fill_in 'username', with: 'admin'
           fill_in 'fullName', with: 'Continuous Integration Administrator'
-          fill_in 'email', with: 'jira@circleci.com'
+          fill_in 'email', with: 'confluence@circleci.com'
           fill_in 'password', with: 'admin'
           fill_in 'confirm', with: 'admin'
           click_button 'Next'
         end
       end
 
-      it { expect(current_path).to match '/setup/finishsetup.action' }
+      it { is_expected.to have_current_path %r{/setup/finishsetup.action} }
       it { is_expected.to have_link 'Start' }
     end
 
@@ -115,7 +105,7 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
         click_link 'Start'
       end
 
-      it { expect(current_path).to match '/welcome.action' }
+      it { is_expected.to have_current_path %r{/welcome.action} }
       # The acceptance testing comes to an end here since we got to the
       # Confluence dashboard without any trouble through the setup.
     end
@@ -124,10 +114,12 @@ shared_examples 'an acceptable confluence instance' do |database_examples|
   describe 'Stopping the Confluence instance' do
     before(:all) { @container.kill_and_wait signal: 'SIGTERM' }
 
+    subject { @container }
+
     it 'should shut down successful' do
       # give the container up to 5 minutes to successfully shutdown
       # exit code: 128+n Fatal error signal "n", ie. 143 = fatal error signal
-      # SIGTERM.
+      # SIGTERM
       #
       # The following state check has been left out 'ExitCode' => 143 to
       # suppor CircleCI as CI builder. For some reason whether you send SIGTERM

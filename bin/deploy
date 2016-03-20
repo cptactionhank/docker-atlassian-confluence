@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Prepare Git committer information
-git config user.email "circleci@circleci"
+git config user.email "maage@dotmaage.dk"
 git config user.name "Circle CI Automated Builder"
 
 # Obtain the currently latest version of Atlassian Confluence version defined by the

@@ -8,11 +8,11 @@ REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  = Regexp.compile (Regexp.union [
+REGEX_FILTER  = Regexp.compile Regexp.union [
   # Ignore these memory leak warnings since the implementation is made by
   # Atlassian and I will only deliver best effort.
-  %r{org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[ROOT\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ .+\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\.}
-])
+  /org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[ROOT\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ .+\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./
+]
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
@@ -22,7 +22,7 @@ RSpec.configure do |config|
   config.include WaitingHelper
 
   # set the default timeout to 10 minutes.
-  timeout = 600
+  timeout = 400
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
