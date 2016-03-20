@@ -1,6 +1,6 @@
 require 'docker'
-require 'rspec'
 require 'capybara'
+require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
 
@@ -8,11 +8,15 @@ REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  = Regexp.compile (Regexp.union [
-  # Ignore these memory leak warnings since the implementation is made by
-  # Atlassian and I will only deliver best effort.
-  %r{org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[ROOT\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ .+\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\.}
-])
+REGEX_FILTER  = Regexp.compile Regexp.union [
+  /Bundle\ org\.springframework\.osgi\.extender\ \[.*\]\ EventDispatcher:\ Error\ during\ dispatch\.\ \(java\.lang\.NullPointerException\)/,
+  /The\ executor\ associated\ with\ thread\ pool\ \[http\-bio\-8090\]\ has\ not\ fully\ shutdown\.\ Some\ application\ threads\ may\ still\ be\ running\./,
+  # some errors about unregistering JDBC drivers
+  /The\ web\ application\ \[.*\]\ registered\ the\ JDBC\ driver\ \[.*\]\ but\ failed\ to\ unregister\ it\ when\ the\ web\ application\ was\ stopped\.\ To\ prevent\ a\ memory\ leak,\ the\ JDBC\ Driver\ has\ been\ forcibly\ unregistered\./,
+  # after adding database step
+  /The\ web\ application\ \[.*\]\ appears\ to\ have\ started\ a\ thread\ named\ \[.*\]\ but\ has\ failed\ to\ stop\ it\.\ This\ is\ very\ likely\ to\ create\ a\ memory\ leak\./,
+  /The\ web\ application\ \[.*\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ \[.*\]\ \(.*\)\ but\ failed\ to\ remove\ it\ when\ the\ web\ application\ was\ stopped\.\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./
+]
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
@@ -22,7 +26,7 @@ RSpec.configure do |config|
   config.include WaitingHelper
 
   # set the default timeout to 10 minutes.
-  timeout = 600
+  timeout = 400
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -70,6 +74,9 @@ RSpec.configure do |config|
     conf.run_server = false
     conf.default_driver = :poltergeist_debug
     conf.default_max_wait_time = timeout
+
+    # conf.ignore_hidden_elements = false
+    # conf.visible_text_only = false
   end
 
   Docker::DSL.configure do |conf|

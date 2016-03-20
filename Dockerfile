@@ -36,7 +36,7 @@ RUN set -x \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
                                "${CONF_INSTALL}/conf/server.xml" \
-    && touch -d "@0"           "/opt/atlassian/confluence/conf/server.xml"
+    && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml"
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
@@ -49,7 +49,7 @@ EXPOSE 8090
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/atlassian/confluence"]
+VOLUME ["/var/atlassian/confluence", "/opt/atlassian/confluence/logs"]
 
 # Set the default working directory as the Confluence home directory.
 WORKDIR /var/atlassian/confluence
