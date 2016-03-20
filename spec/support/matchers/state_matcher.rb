@@ -7,7 +7,7 @@ module Docker
     extend RSpec::Matchers::DSL
 
     class StateMatcher < RSpec::Matchers::BuiltIn::Include
-      alias_method :parent_matches?, :matches?
+      alias parent_matches? matches?
 
       def initialize(*expected)
         @expected = expected
@@ -19,7 +19,7 @@ module Docker
 
       def description
         described_items = surface_descriptions_in(expected)
-        improve_hash_formatting "include state #{(described_items)}"
+        improve_hash_formatting "include state #{described_items}"
       end
 
       def failure_message
