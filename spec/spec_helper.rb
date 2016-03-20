@@ -3,7 +3,6 @@ require 'capybara'
 require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
-require 'rspec/retry'
 
 REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
@@ -27,12 +26,7 @@ RSpec.configure do |config|
   config.include WaitingHelper
 
   # set the default timeout to 10 minutes.
-  timeout = 400
-
-  # show retry status in spec process
-  config.verbose_retry = true
-  # show exception that triggers a retry if verbose_retry is set to true
-  config.display_try_failure_messages = true
+  timeout = 600
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
