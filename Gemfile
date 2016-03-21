@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rake'
 gem 'rspec'
-gem 'rspec-retry'
 
 gem 'capybara'
 gem 'poltergeist'
