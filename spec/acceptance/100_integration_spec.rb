@@ -26,6 +26,7 @@ describe 'Atlassian Confluence with PostgreSQL 9.3 Database' do
       if ENV['CIRCLECI']
         @container_db.kill signal: 'SIGKILL' unless @container_db.nil?
       else
+        @container_db.kill signal: 'SIGKILL' unless @container_db.nil?
         @container_db.remove force: true, v: true unless @container_db.nil?
       end
     end
@@ -54,6 +55,7 @@ describe 'Atlassian Confluence with MySQL 5.6 Database' do
       if ENV['CIRCLECI']
         @container_db.kill signal: 'SIGKILL' unless @container_db.nil?
       else
+        @container_db.kill signal: 'SIGKILL' unless @container_db.nil?
         @container_db.remove force: true, v: true unless @container_db.nil?
       end
     end
@@ -84,6 +86,7 @@ describe 'Atlassian Confluence behind reverse proxy' do
       if ENV['CIRCLECI']
         @container_proxy.kill signal: 'SIGKILL' unless @container_proxy.nil?
       else
+        @container_proxy.kill signal: 'SIGKILL' unless @container_proxy.nil?
         @container_proxy.remove force: true, v: true unless @container_proxy.nil?
       end
     end

@@ -7,7 +7,7 @@ require 'poltergeist/suppressor'
 REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
-REGEX_STARTUP = /Server startup in \d+ ms/
+REGEX_STARTUP = /Server startup in (\d+) ms/
 REGEX_FILTER  = Regexp.compile Regexp.union [
   /Bundle\ org\.springframework\.osgi\.extender\ \[.*\]\ EventDispatcher:\ Error\ during\ dispatch\.\ \(java\.lang\.NullPointerException\)/,
   /The\ executor\ associated\ with\ thread\ pool\ \[http\-bio\-8090\]\ has\ not\ fully\ shutdown\.\ Some\ application\ threads\ may\ still\ be\ running\./,

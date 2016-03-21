@@ -5,6 +5,8 @@ AllCops:
     - 'tmp/**/*'
   TargetRubyVersion: 2.2
 
+Metrics/AbcSize:
+  Enabled: false
 
 Metrics/LineLength:
   Enabled: false
