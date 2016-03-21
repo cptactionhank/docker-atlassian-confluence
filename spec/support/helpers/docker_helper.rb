@@ -33,8 +33,7 @@ module Docker
       thread = Thread.new do
         timeout(Docker::DSL.timeout) do
           Thread.handle_interrupt(TimeoutError => :on_blocking) do
-            streaming_logs stdout: true, stderr: true, follow: true do |stream, chunk|
-              puts "[#{stream}] #{chunk}" if ENV['TRAVIS']
+            streaming_logs stdout: true, stderr: true, follow: true do |_, chunk|
               if chunk =~ regex
                 Thread.current[:chunk] = chunk
                 Thread.exit
