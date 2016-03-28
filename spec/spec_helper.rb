@@ -11,7 +11,7 @@ REGEX_STARTUP = /Server startup in \d+ ms/
 REGEX_FILTER  = Regexp.compile Regexp.union [
   # Ignore these memory leak warnings since the implementation is made by
   # Atlassian and I will only deliver best effort.
-  /org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[ROOT\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ .+\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./
+  /org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[.+\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ .+\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./
 ]
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
