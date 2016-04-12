@@ -20,7 +20,7 @@
   <pre><code code class="bash">{% raw %}docker pull cptactionhank/atlassian-confluence:{{ confluence.version.name }}
 docker rm --volumes --force "{{ container.name }}"
 docker create --restart=no --name "{{ container.name }}" \
-  --publish "8080:{{ confluence.port }}" \
+  --publish "{{ confluence.port }}:8090" \
   --volume "hostpath:{{ confluence.home}}" \
   --env "CATALINA_OPTS={{ container.java.memory.minimum | prefix:' -Xms' }}{{ container.java.memory.maximum | prefix:' -Xmx' }}{{ container.environment.atlassian.plugins.enable.wait | prefix:' -Datlassian.plugins.enable.wait=' }}" \
   cptactionhank/atlassian-confluence:{{ confluence.version.name }}
@@ -45,7 +45,7 @@ Restart=always
 ExecStartPre=/usr/bin/docker pull cptactionhank/atlassian-confluence:{{ confluence.version.name }}
 ExecStartPre=-/usr/bin/docker rm --volumes --force "{{ container.name }}"
 ExecStartPre=/usr/bin/docker create --restart=no --name "{{ container.name }}" \
-  --publish "8080:{{ confluence.port }}" \
+  --publish "{{ confluence.port }}:8090" \
   --volume "hostpath:{{ confluence.home }}" \
   --env "CATALINA_OPTS={{ container.java.memory.minimum | prefix:' -Xms' }}{{ container.java.memory.maximum | prefix:' -Xmx' }}{{ container.environment.atlassian.plugins.enable.wait | prefix:' -Datlassian.plugins.enable.wait=' }}" \
   cptactionhank/atlassian-confluence:{{ confluence.version.name }}
@@ -74,7 +74,7 @@ pre-start script
   /usr/bin/docker pull cptactionhank/atlassian-confluence:{{ confluence.version.name }}
   /usr/bin/docker rm --volumes --force "{{ container.name }}"
   /usr/bin/docker create --restart=no --name "{{ container.name }}" \
-    --publish "8080:{{ confluence.port }}" \
+    --publish "{{ confluence.port }}:8090" \
     --volume "hostpath:{{ confluence.home }}" \
     --env "CATALINA_OPTS={{ container.java.memory.minimum | prefix:' -Xms' }}{{ container.java.memory.maximum | prefix:' -Xmx' }}{{ container.environment.atlassian.plugins.enable.wait | prefix:' -Datlassian.plugins.enable.wait=' }}" \
     cptactionhank/atlassian-confluence:{{ confluence.version.name }}
