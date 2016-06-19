@@ -1,6 +1,6 @@
 require 'docker'
-require 'rspec'
 require 'capybara'
+require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
 
