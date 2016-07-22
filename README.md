@@ -22,7 +22,7 @@ Then simply navigate your preferred browser to `http://[dockerhost]:8090` and fi
 
 ## Contributions
 
-This image has been created with the best intentions and an expert understanding of docker, but it should not be expected to be flawless. Should you be in the position to do so, I request that you help support this repository with best-practices and other additions.
+This image has been created with the best intentions and an good understanding of Docker, but it should not be expected to be flawless. Should you be in the position to do so, I request that you help support this repository with best-practices and other additions.
 
 Travis CI and CircleCI has been configured to build the `Dockerfile` and run acceptance tests on the Atlassian Confluence image to ensure it is working.
 
