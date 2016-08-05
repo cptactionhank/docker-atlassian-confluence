@@ -64,11 +64,14 @@ app.controller('ConfigurationController', function($rootScope, $scope, $http) {
   // populate the controllers model with the first 1000 available tags from
   // the Docker Hub repository.
   $http
-    .get('//github-pages-cors-proxy.herokuapp.com/https://hub.docker.com/v2/repositories/cptactionhank/atlassian-confluence/tags/?page_size=1000')
+    .get('https://api.github.com/repos/cptactionhank/docker-atlassian-confluence/branches')
     .success(function(data, status) {
-      $scope.tags = data.results.sort(function(a, b) {
+      $scope.tags = data.sort(function(a, b) {
         return String.naturalCompare(a.name, b.name);
+      }).filter(function(item) {
+        return (item.name !== 'gh-pages') && (item.name !== 'master');
       });
+      $scope.tags.push({ name: 'latest' });
       // set the latest tag as the default selected
       $rootScope.confluence.version = $scope.tags.filter(function(item) {
         return item.name === 'latest';
