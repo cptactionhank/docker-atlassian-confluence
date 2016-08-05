@@ -8,6 +8,8 @@ This is a containerized installation of Atlassian Confluence with Docker, and it
 * [Atlassian JIRA Software](https://cptactionhank.github.io/docker-atlassian-jira-software)
 * [Atlassian JIRA Service Desk](https://cptactionhank.github.io/docker-atlassian-service-desk)
 * [Atlassian Confluence](https://cptactionhank.github.io/docker-atlassian-confluence)
+* [Atlassian Bitbucket](https://cptactionhank.github.io/docker-atlassian-bitbucket)
+* [Atlassian Bamboo](https://cptactionhank.github.io/docker-atlassian-bamboo)
 
 If you want to help out, you can check out the contribution section further down.
 
