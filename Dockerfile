@@ -5,6 +5,9 @@ ENV CONF_HOME     /var/atlassian/confluence
 ENV CONF_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  5.10.8
 
+ENV JAVA_CACERTS  $JAVA_HOME/jre/lib/security/cacerts
+ENV CERTIFICATE   $CONF_HOME/certificate
+
 # Install Atlassian Confluence and hepler tools and setup initial home
 # directory structure.
 RUN set -x \
@@ -36,7 +39,8 @@ RUN set -x \
         --delete               "Server/Service/Engine/Host/@debug" \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
                                "${CONF_INSTALL}/conf/server.xml" \
-    && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml"
+    && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml" \
+    && chown daemon:daemon     "${JAVA_CACERTS}"
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but

@@ -21,4 +21,9 @@ if [ "$(stat --format "%Y" "${CONF_INSTALL}/conf/server.xml")" -eq "0" ]; then
   fi
 fi
 
+if [ -f "${CERTIFICATE}" ]; then
+  keytool -noprompt -storepass changeit -keystore ${JAVA_CACERTS} -import -file ${CERTIFICATE} -alias CompanyCA
+fi
+
+
 exec "$@"
