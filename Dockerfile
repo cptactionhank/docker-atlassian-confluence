@@ -8,11 +8,14 @@ ENV CONF_VERSION  6.0.1
 ENV JAVA_CACERTS  $JAVA_HOME/jre/lib/security/cacerts
 ENV CERTIFICATE   $CONF_HOME/certificate
 
+ENV JAVA_CACERTS  $JAVA_HOME/jre/lib/security/cacerts
+ENV CERTIFICATE   $CONF_HOME/certificate
+
 # Install Atlassian Confluence and hepler tools and setup initial home
 # directory structure.
 RUN set -x \
     && apt-get update --quiet \
-    && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet \
+    && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet sudo texlive bash dvipng \
     && apt-get clean \
     && mkdir -p                "${CONF_HOME}" \
     && chmod -R 700            "${CONF_HOME}" \
@@ -40,7 +43,13 @@ RUN set -x \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
                                "${CONF_INSTALL}/conf/server.xml" \
     && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml" \
+<<<<<<< HEAD
     && chown daemon:daemon     "${JAVA_CACERTS}"
+=======
+    && chown daemon:daemon     "${JAVA_CACERTS}" \
+    && usermod -d	       "${CONF_HOME}" daemon
+
+>>>>>>> 96266b6d0fd050d21e2fc4795586e0dcc3353378
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
