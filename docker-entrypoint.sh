@@ -25,8 +25,4 @@ if [ -f "${CERTIFICATE}" ]; then
   keytool -noprompt -storepass changeit -keystore ${JAVA_CACERTS} -import -file ${CERTIFICATE} -alias CompanyCA
 fi
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 96266b6d0fd050d21e2fc4795586e0dcc3353378
 exec "$@"
