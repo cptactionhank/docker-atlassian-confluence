@@ -22,6 +22,18 @@ docker run --detach --publish 8090:8090 cptactionhank/atlassian-confluence:lates
 
 Then simply navigate your preferred browser to `http://[dockerhost]:8090` and finish the configuration.
 
+## Configuration
+
+### Number of log files to keep
+
+By default Confluence comes with the configuration of 5 files of 20MB each to keep (and rotate).
+There's a possibility to override the number of files with the environment variable called `NUMBER_OF_FILES_TO_KEEP`.
+
+Usage:
+```
+    docker run ... -e "NUMBER_OF_LOG_FILES_TO_KEEP=50"
+```
+
 ## Contributions
 
 This image has been created with the best intentions and an good understanding of Docker, but it should not be expected to be flawless. Should you be in the position to do so, I request that you help support this repository with best-practices and other additions.
