@@ -25,5 +25,8 @@ if [ -f "${CERTIFICATE}" ]; then
   keytool -noprompt -storepass changeit -keystore ${JAVA_CACERTS} -import -file ${CERTIFICATE} -alias CompanyCA
 fi
 
+if [ -n "${NUMBER_OF_LOG_FILES_TO_KEEP}" ]; then
+  sed -i -r "s/log4j.appender.confluencelog.MaxBackupIndex=[0-9]+/log4j.appender.confluencelog.MaxBackupIndex=${NUMBER_OF_LOG_FILES_TO_KEEP}/g" $CONF_INSTALL/confluence/WEB-INF/classes/log4j.properties
+fi
 
 exec "$@"
