@@ -5,14 +5,6 @@ shared_examples 'a buildable Docker image' do |path, options = {}|
     @container = Docker::Container.create container_options
     @container.start! PublishAllPorts: true
     @container.setup_capybara_url tcp: 8090
-    # Apply hack for Travis
-    if ENV['TRAVIS']
-      Thread.new do
-        @container.streaming_logs stdout: true, stderr: true, follow: true do |stream, chunk|
-          puts "[#{stream}] #{chunk}"
-        end
-      end
-    end
   end
 
   describe 'when starting a Confluence container' do
@@ -26,11 +18,7 @@ shared_examples 'a buildable Docker image' do |path, options = {}|
   end
 
   after :all do
-    if ENV['CIRCLECI']
       @container.kill signal: 'SIGKILL' unless @container.nil?
-    else
-      @container.kill signal: 'SIGKILL' unless @container.nil?
-      @container.remove force: true, v: true unless @container.nil?
-    end
+      @container.remove force: true, v: true unless @container.nil? || ENV['CIRCLECI']
   end
 end

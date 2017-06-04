@@ -9,13 +9,13 @@ shared_examples 'an acceptable Confluence instance' do |database_examples|
 
       it { is_expected.to have_current_path %r{/setup/setupstart.action} }
       it { is_expected.to have_css 'form[name=startform]' }
-      it { is_expected.to have_css 'div.confluence-setup-choice-box[setup-type=custom]' }
+      it { is_expected.to have_css 'div.confluence-setup-choice-box[data-setup-type=custom]' }
     end
 
     context 'when processing welcome setup' do
       before :all do
         within 'form[name=startform]' do
-          find(:css, 'div.confluence-setup-choice-box[setup-type=custom]').trigger('click')
+          find(:css, 'div.confluence-setup-choice-box[data-setup-type=custom]').trigger('click')
           click_button 'Next'
         end
       end
