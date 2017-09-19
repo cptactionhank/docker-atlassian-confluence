@@ -14,6 +14,8 @@ shared_examples 'a buildable Docker image' do |path, options = {}|
     it { is_expected.to be_running }
     it { is_expected.to have_mapped_ports tcp: 8090 }
     it { is_expected.not_to have_mapped_ports udp: 8090 }
+    it { is_expected.to have_mapped_ports tcp: 8091 }
+    it { is_expected.not_to have_mapped_ports udp: 8091 }
     it { is_expected.to wait_until_output_matches REGEX_STARTUP }
   end
 
