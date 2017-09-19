@@ -17,7 +17,7 @@ If you want to help out, you can check out the contribution section further down
 
 To quickly get started running a Confluence instance, use the following command:
 ```bash
-docker run --detach --publish 8090:8090 cptactionhank/atlassian-confluence:latest
+docker run --detach --publish 8090:8090 --publish 8091:8091 cptactionhank/atlassian-confluence:latest
 ```
 
 Then simply navigate your preferred browser to `http://[dockerhost]:8090` and finish the configuration.
