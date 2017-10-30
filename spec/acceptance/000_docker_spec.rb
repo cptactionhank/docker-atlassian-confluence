@@ -11,6 +11,8 @@ describe 'Docker image building' do
     it { is_expected.to_not be_nil }
     it { is_expected.to have_exposed_port tcp: 8090 }
     it { is_expected.to_not have_exposed_port udp: 8090 }
+    it { is_expected.to have_exposed_port tcp: 8091 }
+    it { is_expected.to_not have_exposed_port udp: 8091 }
     it { is_expected.to have_volume '/var/atlassian/confluence' }
     it { is_expected.to have_volume '/opt/atlassian/confluence/logs' }
     it { is_expected.to have_working_directory '/var/atlassian/confluence' }
