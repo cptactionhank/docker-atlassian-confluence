@@ -1,5 +1,5 @@
 describe 'Atlassian Confluence with Embedded Database' do
-  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms1024m -Xmx1024m -XX:+UseG1GC -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
+  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
   include_examples 'an acceptable Confluence instance', 'using an embedded database'
 end
