@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:8-alpine
 
 # Setup useful environment variables
 ENV CONF_HOME     /var/atlassian/confluence
@@ -11,9 +11,7 @@ ENV CERTIFICATE   $CONF_HOME/certificate
 # Install Atlassian Confluence and hepler tools and setup initial home
 # directory structure.
 RUN set -x \
-    && apt-get update --quiet \
-    && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet \
-    && apt-get clean \
+    && apk --no-cache add curl xmlstarlet bash \
     && mkdir -p                "${CONF_HOME}" \
     && chmod -R 700            "${CONF_HOME}" \
     && chown daemon:daemon     "${CONF_HOME}" \
@@ -62,4 +60,4 @@ COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["/opt/atlassian/confluence/bin/catalina.sh", "run"]
+CMD ["/opt/atlassian/confluence/bin/start-confluence.sh", "-fg"]
