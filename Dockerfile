@@ -11,7 +11,7 @@ ENV CERTIFICATE   $CONF_HOME/certificate
 # Install Atlassian Confluence and hepler tools and setup initial home
 # directory structure.
 RUN set -x \
-    && apk --no-cache add curl xmlstarlet bash \
+    && apk --no-cache add curl xmlstarlet bash fontconfig ttf-dejavu \
     && mkdir -p                "${CONF_HOME}" \
     && chmod -R 700            "${CONF_HOME}" \
     && chown daemon:daemon     "${CONF_HOME}" \
