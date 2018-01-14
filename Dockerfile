@@ -8,7 +8,7 @@ ENV CONF_VERSION  6.3.4
 ENV JAVA_CACERTS  $JAVA_HOME/jre/lib/security/cacerts
 ENV CERTIFICATE   $CONF_HOME/certificate
 
-# Install Atlassian Confluence and hepler tools and setup initial home
+# Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
 RUN set -x \
     && apk --no-cache add curl xmlstarlet bash fontconfig ttf-dejavu \
