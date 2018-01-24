@@ -1,12 +1,12 @@
-describe 'Atlassian Confluence with Embedded Database' do
-  include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
-
-  include_examples 'an acceptable Confluence instance', 'using an embedded database'
-end
+# describe 'Atlassian Confluence with Embedded Database' do
+#   include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
+#
+#   include_examples 'an acceptable Confluence instance', 'using an embedded database'
+# end
 
 # describe 'Atlassian Confluence with PostgreSQL 9.3 Database' do
 #   include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms1024m -Xmx1024m -XX:+UseG1GC -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
-# 
+#
 #   include_examples 'an acceptable Confluence instance', 'using a PostgreSQL database' do
 #     before :all do
 #       Docker::Image.create fromImage: 'postgres:9.3'
@@ -32,10 +32,10 @@ end
 #     end
 #   end
 # end
-# 
+#
 # describe 'Atlassian Confluence with MySQL 5.6 Database' do
 #   include_examples 'a buildable Docker image', '.', env: ["CATALINA_OPTS=-Xms1024m -Xmx1024m -XX:+UseG1GC -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
-# 
+#
 #   include_examples 'an acceptable Confluence instance', 'using a MySQL database' do
 #     before :all do
 #       Docker::Image.create fromImage: 'mysql:5.6'
@@ -61,7 +61,7 @@ end
 #     end
 #   end
 # end
-# 
+#
 # describe 'Atlassian Confluence behind reverse proxy' do
 #   include_examples 'a buildable Docker image', '.',
 #     env: [
@@ -71,7 +71,7 @@ end
 #       'X_PROXY_SCHEME=http',
 #       'X_PATH=/confluence-path'
 #     ]
-# 
+#
 #   include_examples 'an acceptable Confluence instance', 'using an embedded database' do
 #     before :all do
 #       image = Docker::Image.build_from_dir '.docker/nginx'
