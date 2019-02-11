@@ -34,6 +34,7 @@ You can configure a small set of things by supplying the following environment v
 | X_PROXY_PORT           | Sets the Tomcat Connectors `ProxyPort` attribute |
 | X_PROXY_SCHEME         | If set to `https` the Tomcat Connectors `secure=true` and `redirectPort` equal to `X_PROXY_PORT`   |
 | X_PATH                 | Sets the Tomcat connectors `path` attribute |
+| X_SESSION_COOKIE       | Set the name of the used Session cookie |
 
 ## Contributions
 
