@@ -1,0 +1,61 @@
+version: 2
+jobs:
+  test-building-container:
+    docker: # run the steps with Docker
+      - image: circleci/ruby
+    # do stuff
+    steps:
+      # checkout sourcecode on to working_directory
+      - checkout
+      # Once setup_remote_docker is called, a new remote environment is created,
+      # and your primary container is configured to use it. This is a way to solve
+      # Docker-in-Docker problem described below:
+      # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
+      - setup_remote_docker
+      # build the image
+      - run:
+          name: Build the latest version
+          command: docker build .
+
+  build-and-update:
+    docker: # run the steps with Docker
+      - image: circleci/ruby
+    # do stuff
+    steps:
+      # checkout sourcecode on to working_directory
+      - checkout
+      # Once setup_remote_docker is called, a new remote environment is created,
+      # and your primary container is configured to use it. This is a way to solve
+      # Docker-in-Docker problem described below:
+      # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
+      - setup_remote_docker
+      - add_ssh_keys
+      # update Dockerfile to latest version
+      - run:
+          name: Prepare for latest version
+          command: bin/prepare
+      # build the image, ensures we do not commit an unbuildable image
+      - run:
+          name: Build the latest version
+          command: docker build .
+      # deploy the new version
+      - run:
+          name: Commit and push the latest buildable version
+          command: bin/deploy
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - test-building-container
+
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-and-update
