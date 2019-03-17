@@ -11,7 +11,7 @@ ENV CERTIFICATE   $CONF_HOME/certificate
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
 RUN set -x \
-    && apk --no-cache add curl xmlstarlet bash ttf-dejavu libc6-compat \
+    && apk --no-cache add curl xmlstarlet bash ttf-dejavu libc6-compat gcompat \
     && mkdir -p                "${CONF_HOME}" \
     && chmod -R 700            "${CONF_HOME}" \
     && chown daemon:daemon     "${CONF_HOME}" \
