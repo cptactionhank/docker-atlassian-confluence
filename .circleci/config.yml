@@ -22,6 +22,7 @@ jobs:
       - image: circleci/ruby
     # do stuff
     steps:
+      - add_ssh_keys
       # checkout sourcecode on to working_directory
       - checkout
       # Once setup_remote_docker is called, a new remote environment is created,
@@ -29,7 +30,6 @@ jobs:
       # Docker-in-Docker problem described below:
       # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
       - setup_remote_docker
-      - add_ssh_keys
       # update Dockerfile to latest version
       - run:
           name: Prepare for latest version
