@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test-building-container:
+  build:
     docker: # run the steps with Docker
       - image: circleci/ruby
     # do stuff
@@ -47,7 +47,7 @@ workflows:
   version: 2
   commit:
     jobs:
-      - test-building-container
+      - build
 
   nightly:
     triggers:
