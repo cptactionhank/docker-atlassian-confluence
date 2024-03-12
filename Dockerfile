@@ -26,6 +26,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${CONF_INSTALL}/temp" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/logs" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/work" \
+    && chown -R daemon:daemon  "${CONF_INSTALL}/confluence/WEB-INF/web.xml" \
     && echo -e                 "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
     && xmlstarlet              ed --inplace \
         --delete               "Server/@debug" \
