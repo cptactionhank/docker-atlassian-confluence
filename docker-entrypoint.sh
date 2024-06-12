@@ -21,6 +21,15 @@ if [ "$(stat -c "%Y" "${CONF_INSTALL}/conf/server.xml")" -eq "0" ]; then
   fi
 fi
 
+# check if the `context.xml` file has been changed since the creation of this
+# Docker image. If the file has been changed the entrypoint script will not
+# perform modifications to the configuration file.
+if [ "$(stat --format "%Y" "${CONF_INSTALL}/conf/context.xml")" -eq "0" ]; then
+  if [ -n "${X_SESSION_COOKIE}" ]; then
+    xmlstarlet ed --inplace --pf --ps --insert '//Context' --type attr --name "sessionCookieName" --value "CONFLUENCESESSIONID" "${CONF_INSTALL}/conf/context.xml"
+  fi
+fi
+
 if [ -f "${CERTIFICATE}" ]; then
   keytool -noprompt -storepass changeit -keystore ${JAVA_CACERTS} -import -file ${CERTIFICATE} -alias CompanyCA
 fi
