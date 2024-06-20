@@ -25,5 +25,8 @@ if [ -f "${CERTIFICATE}" ]; then
   keytool -noprompt -storepass changeit -keystore ${JAVA_CACERTS} -import -file ${CERTIFICATE} -alias CompanyCA
 fi
 
+if [ -n "${SESSION_TIMEOUT}" ]; then
+  xmlstarlet ed --inplace --pf --ps -N 'ns=http://java.sun.com/xml/ns/javaee' --update '//ns:session-config/ns:session-timeout' --value "${SESSION_TIMEOUT}" "${CONF_INSTALL}/confluence/WEB-INF/web.xml"
+fi
 
 exec "$@"
