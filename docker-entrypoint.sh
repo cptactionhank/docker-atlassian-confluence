@@ -21,6 +21,13 @@ if [ "$(stat -c "%Y" "${CONF_INSTALL}/conf/server.xml")" -eq "0" ]; then
   fi
 fi
 
+if [ "$(stat -c "%Y" "${CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml")" -eq "0" ]; then
+  if [ "${X_CROWD_SSO}" = "true" ]; then
+    xmlstarlet ed --inplace -u "/security-config/authenticator[@class='com.atlassian.confluence.user.ConfluenceAuthenticator']/@class" -v "com.atlassian.confluence.user.ConfluenceCrowdSSOAuthenticator" "${CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml"
+    export CATALINA_OPTS="${CATALINA_OPTS} -Dcrowd.properties=${CONF_HOME}/crowd.properties"
+  fi
+fi
+
 if [ -f "${CERTIFICATE}" ]; then
   keytool -noprompt -storepass changeit -keystore ${JAVA_CACERTS} -import -file ${CERTIFICATE} -alias CompanyCA
 fi

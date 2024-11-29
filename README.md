@@ -32,6 +32,18 @@ You can configure a small set of things by supplying the following environment v
 | X_PROXY_PORT           | Sets the Tomcat Connectors `ProxyPort` attribute |
 | X_PROXY_SCHEME         | If set to `https` the Tomcat Connectors `secure=true` and `redirectPort` equal to `X_PROXY_PORT`   |
 | X_PATH                 | Sets the Tomcat connectors `path` attribute |
+| X_CROWD_SSO            | Set to `true` to enable SSO via Atlassian Crowd
+
+## How to enable SSO via Crowd
+
+Setting X_CROWD_SSO to `true` will do two things:
+
+- enable the *ConfluenceCrowdSSOAuthenticator*
+- tell Confluence to load `crowd-properties.conf` from `/var/atlassian/confluence` **(It is your responsibility to put it there!)**
+
+**Warning:** You have to setup the Crowd user directory in Confluence beforehand. After enabling the *ConfluenceCrowdSSOAuthenticator*, you are not able to log in using local accounts anymore.
+
+See the [official Documentation](https://confluence.atlassian.com/crowd/integrating-crowd-with-atlassian-confluence-198573.html) for more information.
 
 ## Contributions
 

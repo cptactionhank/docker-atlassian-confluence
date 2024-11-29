@@ -26,6 +26,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${CONF_INSTALL}/temp" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/logs" \
     && chown -R daemon:daemon  "${CONF_INSTALL}/work" \
+    && chown daemon:daemon     "${CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml" \
     && echo -e                 "\nconfluence.home=$CONF_HOME" >> "${CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
     && xmlstarlet              ed --inplace \
         --delete               "Server/@debug" \
@@ -38,6 +39,7 @@ RUN set -x \
         --delete               "Server/Service/Engine/Host/Context/@debug" \
                                "${CONF_INSTALL}/conf/server.xml" \
     && touch -d "@0"           "${CONF_INSTALL}/conf/server.xml" \
+    && touch -d "@0"           "${CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml" \
     && chown daemon:daemon     "${JAVA_CACERTS}"
 
 # Use the default unprivileged account. This could be considered bad practice
