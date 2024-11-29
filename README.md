@@ -1,4 +1,6 @@
-[![CircleCI Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-confluence/master.svg?label=CircleCI)](https://circleci.com/gh/cptactionhank/docker-atlassian-confluence) [![Open Issues](https://img.shields.io/github/issues/cptactionhank/docker-atlassian-confluence.svg)](https://github.com/cptactionhank/docker-atlassian-confluence/issues) [![Stars on GitHub](https://img.shields.io/github/stars/cptactionhank/docker-atlassian-confluence.svg)](https://github.com/cptactionhank/docker-atlassian-confluence/stargazers) [![Forks on GitHub](https://img.shields.io/github/forks/cptactionhank/docker-atlassian-confluence.svg)](https://github.com/cptactionhank/docker-atlassian-confluence/network) [![Stars on Docker Hub](https://img.shields.io/docker/stars/cptactionhank/atlassian-confluence.svg)](https://hub.docker.com/r/cptactionhank/atlassian-confluence/) [![Pulls on Docker Hub](https://img.shields.io/docker/pulls/cptactionhank/atlassian-confluence.svg)](https://hub.docker.com/r/cptactionhank/atlassian-confluence/) [![Sponsor by PayPal](https://img.shields.io/badge/sponsor-PayPal-blue.svg)](https://paypal.me/cptactionhank/5)
+# Fork
+
+Added ENV X_SESSION_COOKIE. This is the only difference to the original source. Fork will be available till my pull request is accepted.
 
 # Atlassian Confluence in a Docker container
 
@@ -32,6 +34,7 @@ You can configure a small set of things by supplying the following environment v
 | X_PROXY_PORT           | Sets the Tomcat Connectors `ProxyPort` attribute |
 | X_PROXY_SCHEME         | If set to `https` the Tomcat Connectors `secure=true` and `redirectPort` equal to `X_PROXY_PORT`   |
 | X_PATH                 | Sets the Tomcat connectors `path` attribute |
+| X_SESSION_COOKIE       | Set the name of the used Session cookie |
 
 ## Contributions
 
