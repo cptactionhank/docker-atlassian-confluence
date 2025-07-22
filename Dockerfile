@@ -61,3 +61,4 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian Confluence as a foreground process by default.
 CMD ["/opt/atlassian/confluence/bin/start-confluence.sh", "-fg"]
+HEALTHCHECK --interval=60s --timeout=5s --retries=3 CMD wget localhost:8090/status -q -O - > /dev/null 2>&1
